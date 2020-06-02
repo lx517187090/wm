@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${package.Mapper}.${table.mapperName}">
+
+#if(${enableCache})
+	<!-- 开启二级缓存 -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+
+#end
+#if(${baseResultMap})
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##生成主键排在第一位
+		<id column="${field.name}" property="${field.propertyName}" />
+#end
+#end
+#foreach($field in ${table.commonFields})##生成公共字段
+		<result column="${field.name}" property="${field.propertyName}" />
+#end
+#foreach($field in ${table.fields})
+#if(!${field.keyFlag})##生成普通字段
+		<result column="${field.name}" property="${field.propertyName}" />
+#end
+#end
+	</resultMap>
+
+#end
+
+#if(${baseColumnList})
+    <!-- 通用查询结果列转驼峰命名 -->
+<sql id="Base_Column_List_Alias">
+#foreach($field in ${table.commonFields})##生成公共字段
+#if($field.name == "id_")
+	${field.name} AS ${field.propertyName},
+#end
+#end
+#foreach($field in ${table.fields})
+	${field.name} AS ${field.propertyName},
+#end
+#foreach($field in ${table.commonFields})##生成公共字段
+#if($field.name != "id_")
+#if($velocityCount == $table.commonFields.size())
+	${field.name} AS ${field.propertyName}
+#else
+	${field.name} AS ${field.propertyName},
+#end
+#end
+#end
+</sql>
+#end
+
+#if(${baseColumnList})
+	<!-- 通用查询结果列 -->
+<sql id="Base_Column_List">
+#foreach($field in ${table.commonFields})##生成公共字段
+#if($field.name == "id_")
+	${field.name},
+#end
+#end
+#foreach($field in ${table.fields})
+	${field.name},
+#end
+#foreach($field in ${table.commonFields})##生成公共字段
+#if($field.name != "id_")
+#if($velocityCount == $table.commonFields.size())
+	${field.name}
+#else
+	${field.name},
+#end
+#end
+#end
+</sql>
+#end
+
+<!--通用新增记录-->
+<insert id="insert" parameterType="${package.Entity}.${entity}">
+	INSERT INTO ${table.name}
+	<trim prefix="(" suffix=")" suffixOverrides=",">
+#foreach($field in ${table.commonFields})
+#if($field.name == "id_")
+			${field.name},
+#end
+#end
+#foreach($field in ${table.fields})
+		<if test="${field.propertyName} != null and ${field.propertyName} != ''">
+			${field.name},
+		</if>
+#end
+#foreach($field in ${table.commonFields})
+#if($field.name != "id_")
+#if($field.name == "create_time")
+			${field.name},
+#elseif($field.name == "enable_")
+			${field.name},
+#elseif($field.name == "version")
+			${field.name},
+#else
+		<if test="${field.propertyName} != null and ${field.propertyName} != ''">
+			${field.name},
+		</if>
+#end
+#end
+#end
+	</trim>
+	VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+#foreach($field in ${table.commonFields})
+#if($field.name == "id_")
+            #{${field.propertyName},jdbcType=${field.columnType}},
+#end
+#end
+#foreach($field in ${table.fields})
+		<if test="${field.propertyName} != null and ${field.propertyName} != ''">
+			#{${field.propertyName},jdbcType=${field.columnType}},
+		</if>
+#end
+#foreach($field in ${table.commonFields})
+#if($field.name != "id_")
+#if($field.name == "create_time")
+    		now(),
+#elseif($field.name == "enable_")
+			1,
+#elseif($field.name == "version")
+			1,
+#else
+		<if test="${field.propertyName} != null and ${field.propertyName} != ''">
+			#{${field.propertyName},jdbcType=${field.columnType}},
+		</if>
+#end
+#end
+#end
+    </trim>
+</insert>
+
+<!--通用更新记录-->
+<update id="updateById" parameterType="${package.Entity}.${entity}">
+    UPDATE ${table.name}
+	<set>
+#foreach($field in ${table.fields})
+		<if test="${field.propertyName} != null and ${field.propertyName} != ''">
+			${field.name} = #{${field.propertyName},jdbcType=${field.columnType}},
+		</if>
+#end
+#foreach($field in ${table.commonFields})
+#if($field.name != "id_")
+#if($field.name == "update_time")
+    		update_time = now(),
+#elseif($field.name == "version")
+    		version = version + 1,
+#else
+		<if test="${field.propertyName} != null and ${field.propertyName} != ''">
+			${field.name} = #{${field.propertyName},jdbcType=${field.columnType}},
+		</if>
+#end
+#end
+#end
+    </set>
+	<where>
+        id_ = #{id,jdbcType=LONG}
+	</where>
+
+</update>
+
+<!--通用查询-->
+#*<select id="selectList" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List"/>
+	<where>
+		${ew.sqlSegment}
+	</where>
+</select>*#
+<!--通用分页查询-->
+#*<select id="selectPage" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List"/>
+	<where>
+		${ew.sqlSegment}
+	</where>
+</select>*#
+
+</mapper>

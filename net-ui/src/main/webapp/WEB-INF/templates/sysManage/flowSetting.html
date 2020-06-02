@@ -1,0 +1,28 @@
+<div id="sysConfigApp">
+    <el-form ref="form" :model="form" label-width="170px">
+        <el-form-item label="人工审批总开关">
+            <el-switch on-text="开启" on-value="1" off-text="关闭" off-value="2"
+                       v-model="form.MainAppSwitch" @change="MainAppSwitchChange"></el-switch>
+        </el-form-item>
+        <el-form-item label="不兼容贷款品种审核方式">
+            <el-radio-group v-model="form.CompatibilityAppSwitch" @change="CompatibilityAppSwitchChange">
+                <el-radio :label="'1'">拒批</el-radio>
+                <el-radio :label="'2'">人工审核</el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <el-form-item label="不兼容担保方式">
+            <el-checkbox-group v-model="form.GuaranteeType" @change="GuaranteeTypeChange">
+                <el-checkbox :label="'100'">抵押</el-checkbox>
+                <el-checkbox :label="'200'">质押</el-checkbox>
+                <el-checkbox :label="'210'">准全额质押</el-checkbox>
+                <el-checkbox :label="'220'">低风险质押</el-checkbox>
+                <el-checkbox :label="'300'">保证</el-checkbox>
+                <el-checkbox :label="'400'">信用</el-checkbox>
+                <el-checkbox :label="'500'">100%保证金</el-checkbox>
+                <el-checkbox :label="'510'">准金额保证金</el-checkbox>
+            </el-checkbox-group>
+        </el-form-item>
+    </el-form>
+</div>
+<script type="text/javascript" src="../../../static/js/api/sysManageApi/flowSettingApi.js" data-th-src="@{/static/js/api/sysManageApi/flowSettingApi.js}"></script>
+<script type="text/javascript" src="../../../static/js/app/sysManage/flowSetting.js" data-th-src="@{/static/js/app/sysManage/flowSetting.js}"></script>

@@ -1,0 +1,62 @@
+package org.vz.finance.integration.net.ui.modules.vo.dto;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+import java.io.Serializable;
+
+
+@ApiModel("黑名单增加页面dto")
+public class BlackListAddPageDto implements Serializable{
+
+    @ApiModelProperty("企业名称")
+    private String companyName;
+
+    @ApiModelProperty("证件号码")
+    private String globalId;
+
+    @ApiModelProperty("纳税人识别号")
+    private String tdCode;
+
+    @ApiModelProperty("证件类型")
+    private String globalType;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getGlobalId() {
+        return globalId;
+    }
+
+    public void setGlobalId(String globalId) {
+        this.globalId = globalId;
+    }
+
+    public String getTdCode() {
+        return tdCode;
+    }
+
+    public void setTdCode(String tdCode) {
+        this.tdCode = tdCode;
+    }
+
+    public String getGlobalType() {
+        return globalType;
+    }
+
+    public void setGlobalType(String globalType) {
+        this.globalType = globalType;
+    }
+
+    @Override
+    public String toString() {
+        return "BlackListAddPageDto [companyName=" + companyName + ", globalId=" + globalId + ", tdCode=" + tdCode
+                + ", globalType=" + globalType + "]";
+    }
+
+}

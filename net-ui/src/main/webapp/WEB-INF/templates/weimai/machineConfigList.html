@@ -1,0 +1,65 @@
+<!--定义当前页面对应的vue示例-->
+<div id="orderInfoApp">
+    <div v-show="showHide">
+
+        <input id="type" value="machine" type="hidden" />
+
+        <!--定义查询参数表单-->
+        <el-row :gutter="20">
+            <el-col :span="6">
+                <div class="input_label">机器名称:</div>
+                <div class="input_wrap">
+                    <el-input placeholder="请输入机器名称" size="small" v-model="formObj.confName" clearable></el-input>
+                </div>
+            </el-col>
+
+            <el-col :span="17">
+                <el-button style="margin-left:12px;" size="small" icon="search" :loading="searchLoading"  @click="onSubmit">查询</el-button>
+                <el-button shiro:hasPermission="weimai:config" type="primary" size="small" icon="plus" @click="addInfo">新增</el-button>
+                <el-button shiro:hasPermission="weimai:config" type="primary" size="small" icon="edit" @click="modifyInfo">修改</el-button>
+                <el-button shiro:hasPermission="weimai:config" type="primary" size="small" icon="delete" @click="deleteInfo">删除</el-button>
+            </el-col>
+        </el-row>
+
+        <!--定义展示表格-->
+        <el-row class="paddingTop10">
+            <el-col>
+                <el-table :data="tableData" v-loading="tableLoading" @selection-change="handleSelectionChange" border>
+                    <el-table-column type="selection" width="55" fixed="left"></el-table-column>
+                    <el-table-column prop="confName" label="机器名称"></el-table-column>
+                    <el-table-column prop="confKey" label="重量"></el-table-column>
+                </el-table>
+                <!--导入分页页面-->
+                <div data-th-include="common/pagination"></div>
+            </el-col>
+        </el-row>
+    </div>
+
+
+    <!--修改/增加-->
+    <div v-show="!showHide">
+        <el-row class="panel">
+            <el-col class="panel-header" v-text="panelTitle">
+            </el-col>
+            <el-col style="padding: 20px;width: 550px;">
+                <el-form :model="configForm" :rules="rules" ref="configForm" label-width="120px" class="demo-orderForm">
+                    <el-form-item label="机器名称" prop="confName">
+                        <el-input v-model="configForm.confName" placeholder="机器名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="重量" prop="confKey">
+                        <el-input v-model="configForm.confKey" placeholder="重量"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="updateOrderInfo('configForm')">确定</el-button>
+                        <el-button @click="getBack">返回</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+        </el-row>
+    </div>
+
+    <script type="text/javascript" src="../../../static/js/api/weimai/infoListApi.js"
+            data-th-src="@{/static/js/api/weimai/infoListApi.js}"></script>
+    <script type="text/javascript" src="../../../static/js/app/weimai/configList.js"
+            data-th-src="@{/static/js/app/weimai/configList.js}"></script>
+</div>

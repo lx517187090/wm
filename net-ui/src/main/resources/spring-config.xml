@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/cache
+         http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+
+    <!-- 引入属性配置文件 -->
+    <bean class="org.vz.finance.integration.net.ui.core.utils.PropertiesUtil">
+        <property name="order" value="1"/>
+        <property name="locations">
+            <list>
+                <value>classpath:properties/jdbc.properties</value>
+                <value>${system.config.path}</value>
+                <value>classpath:properties/config.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 扫描注解 -->
+    <context:component-scan base-package="org.vz.finance.integration">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
+    <!-- 引入SPRING配置文件 -->
+    <import resource="classpath*:config/dataSource.xml"/>
+    <import resource="classpath*:config/mybatis.xml"/>
+    <import resource="classpath*:config/shiro.xml"/>
+
+    <cache:annotation-driven/>
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cache-manager-ref="ehcacheManager"/>
+    <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml"/>
+</beans>

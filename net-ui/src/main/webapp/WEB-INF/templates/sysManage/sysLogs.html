@@ -1,0 +1,126 @@
+<div id="sysLogsApp">
+    <section>
+        <div v-show="showHide">
+            <el-row :gutter="20" class="paddingTop10">
+                <el-col :span="6">
+                    <div class="input_label">用户名 :</div>
+                    <div class="input_wrap">
+                        <el-select size="small" v-model="formObj.username" placeholder="请选择" filterable default-first-option clearable>
+                            <el-option>请选择</el-option>
+                            <el-option
+                                    v-for="item in allUserList"
+                                    :key="item.username"
+                                    :label="item.loginName"
+                                    :value="item.username">
+                                <span style="float: left">{{ item.loginName }}</span>
+                                <span style="margin-left:15px;color: #8492a6; font-size: 13px">({{ item.username }})</span>
+                            </el-option>
+                        </el-select>
+                    </div>
+                </el-col>
+
+                <el-col :span="6">
+                    <div class="input_label">操作类型 :</div>
+                    <div class="input_wrap">
+                        <el-select size="small" v-model="formObj.operateType" placeholder="请选择">
+                            <el-option
+                                    v-for="item in operateTypes"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row :gutter="20" class="paddingTop10">
+                <el-col :span="6">
+                    <div class="input_label">查询开始时间 :</div>
+                    <div class="input_wrap">
+                        <el-date-picker
+                                size="small"
+                                v-model="formObj.startTime"
+                                type="date"
+                                value-format="yyyy-MM-dd"
+                                @change="getStartTime"
+                                style="width: 100%"
+                                placeholder="查询开始时间">
+                        </el-date-picker>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <div class="input_label">查询结束时间 :</div>
+                    <div class="input_wrap">
+                        <el-date-picker
+                                size="small"
+                                v-model="formObj.endTime"
+                                type="date"
+                                value-format="yyyy-MM-dd"
+                                @change="getEndTime"
+                                style="width: 100%"
+                                placeholder="查询结束时间">
+                        </el-date-picker>
+                    </div>
+                </el-col>
+                <el-col :span="10" class="fr" style="width: auto;margin-top: 10px;">
+                    <div style="width: 100px;margin-right: 10px;float: right;">
+                        <el-button style="width: 100px;" size="small" @click="exportExcel">
+                            <i class="fa fa-download " aria-hidden="true"></i><span style="margin-left: 5px;">导出</span>
+                        </el-button>
+                    </div>
+                    <div style="width: 100px;margin-right: 10px;float: right;">
+                        <el-button style="width: 100px;"  size="small" icon="search" :loading="searchLoading"
+                                   @click="searchInfo">查询
+                        </el-button>
+                    </div>
+                </el-col>
+            </el-row>
+
+            <el-row class="paddingTop10">
+                <el-col>
+                    <el-table
+                            ref="multipleTable"
+                            :data="logData"
+                            v-loading="tableLoading"
+                            border
+                            tooltip-effect="dark"
+                            style="width: 100%">
+                        <el-table-column label="序号" width="45">
+                            <template scope="scope">
+                                <span>{{(scope.$index +1)+(currentPage-1)*size}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="createTime" width="160px" label="操作时间"> </el-table-column>
+
+                        <el-table-column prop="username" width="110px" label="用户名"> </el-table-column>
+                        <el-table-column prop="operateType" label="操作类型" :formatter="formatOperateType" width="100"> </el-table-column>
+
+                        <el-table-column prop="params" label="操作内容"> </el-table-column>
+
+                        <el-table-column prop="ip" label="IP地址" width="140"> </el-table-column>
+                    </el-table>
+                </el-col>
+            </el-row>
+            <!--分页-->
+            <el-row>
+                <el-col :span="24" style="padding-top: 20px;text-align: right;">
+                    <el-pagination
+                            @size-change="handleSizeChange"
+                            @current-change="handleCurrentChange"
+                            :current-page="currentPage"
+                            :page-sizes="[10, 20, 30, 40]"
+                            :page-size="size"
+                            layout="total, sizes, prev, pager, next, jumper"
+                            :total="total">
+                    </el-pagination>
+                </el-col>
+            </el-row>
+        </div>
+
+    </section>
+    <script type="text/javascript" src="../../../static/js/api/sysManageApi/sysLogsApi.js"
+            data-th-src="@{/static/js/api/sysManageApi/sysLogsApi.js}"></script>
+    <script type="text/javascript" src="../../../static/js/app/sysManage/sysLogs.js"
+            data-th-src="@{/static/js/app/sysManage/sysLogs.js}"></script>
+</div>
+

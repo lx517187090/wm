@@ -1,0 +1,55 @@
+<!--头部-->
+<th:block id="indexHeader">
+    <div class="header">
+        <div  class="header_left">
+            <div class="bank_log">
+                <img src="../../../static/images/wm-logo.png" th:src="@{/static/images/wm-logo.png}" alt="" />
+            </div>
+          <!--  <div class="sys_name">
+                <span>后台管理系统</span>
+            </div>-->
+        </div>
+        <div class="header_right logout">
+            <img src="../../../static/images/person-red-icon.png" th:src="@{/static/images/person-red-icon.png}" alt="">
+            <el-dropdown trigger="click" @command="handleCommand">
+              <span class="el-dropdown-link">
+                <span v-text="userName"></span><i class="el-icon-caret-bottom el-icon--right"></i>
+              </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="updatePasswordBtn">修改密码</el-dropdown-item>
+                    <el-dropdown-item command="loginOutBtn" divided>退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+    </div>
+    </div>
+    <el-dialog title="修改密码" :visible.sync="updatePasswordVisible" size="tiny">
+        <el-form :model="ruleForm" ref="ruleForm" :rules="rules">
+            <el-form-item label="原始密码" prop="password" :label-width="formLabelWidth">
+                <el-input type="password" v-model="ruleForm.password" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="新密码" prop="newPassword" :label-width="formLabelWidth">
+                <el-input type="password" v-model="ruleForm.newPassword" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="confirmNewPassword" :label-width="formLabelWidth">
+                <el-input type="password" v-model="ruleForm.confirmNewPassword" auto-complete="off"></el-input>
+            </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="updatePasswordVisible = false">取 消</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')">确 定</el-button>
+        </div>
+    </el-dialog>
+</th:block>
+
+<th:block id="clientHtmlHeader">
+    <div class="header">
+        <div  class="header_left">
+            <div class="bank_log">
+                <img src="../../../static/images/wm-logo.png" th:src="@{/static/images/wm-logo.png}" alt="" />
+            </div>
+            <div class="sys_name">
+                <span></span>
+            </div>
+        </div>
+    </div>
+</th:block>

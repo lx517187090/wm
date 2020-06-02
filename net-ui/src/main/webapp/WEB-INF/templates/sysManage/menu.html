@@ -1,0 +1,171 @@
+
+<div id="menuApp">
+    <style>
+        .panel{
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .panel-header{
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+    <section>
+        <div v-show="showHide">
+            <el-row>
+                <el-col>
+                    <el-button shiro:hasPermission="sys:menu:save" type="primary" size="small" icon="plus" @click="addInfo">新增</el-button>
+                    <el-button shiro:hasPermission="sys:menu:update" type="primary" size="small" icon="edit" @click="modifyInfo">修改</el-button>
+                    <el-button shiro:hasPermission="sys:menu:delete" type="primary" size="small" icon="delete" @click="deleteInfo">删除</el-button>
+                </el-col>
+            </el-row>
+            <el-row class="paddingTop10">
+                <el-col>
+                    <el-table
+                            ref="multipleTable"
+                            :data="filterMenuData"
+                            border
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="handleSelectionChange">
+                        <el-table-column
+                                type="selection"
+                                width="55">
+                        </el-table-column>
+                        <el-table-column
+                                label="菜单ID"
+                                width="120">
+                            <template scope="scope"><span v-text="scope.row.id"></span></template>
+                        </el-table-column>
+                        <el-table-column
+                                label="菜单名称">
+                            <template scope="scope">
+                                <div @click="filterMenuFun(scope.row.id, scope.$index, scope.row.type)">
+                                    <div v-if="scope.row.type == 0" style="cursor: pointer;" >
+                                        <span v-text="scope.row.name"></span>
+                                        <i v-if="scope.row.type == 0 || scope.row.type == 1"
+                                           class="fa fa-chevron-right" :class="{iconIsActive: scope.row.switchFlag}"></i>
+                                    </div>
+                                    <div v-if="scope.row.type == 1" style="cursor: pointer;padding-left: 20px;">
+                                        <span v-text="scope.row.name"></span>
+                                        <i v-if="scope.row.type == 0 || scope.row.type == 1"
+                                           class="fa fa-chevron-right" :class="{iconIsActive: scope.row.switchFlag}"></i>
+                                    </div>
+                                    <div v-if="scope.row.type == 2" style="padding-left:40px;">
+                                        <span v-text="scope.row.name"></span>
+                                        <i v-if="scope.row.type == 0 || scope.row.type == 1"
+                                           class="fa fa-chevron-right" :class="{iconIsActive: scope.row.switchFlag}"></i>
+                                    </div>
+                                </div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                prop="parentName"
+                                label="上级菜单"
+                                show-overflow-tooltip>
+                        </el-table-column>
+                        <el-table-column
+                                width="70px"
+                                label="图标">
+                            <template scope="scope">
+                                <i :class="scope.row.icon"></i>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                width="80px"
+                                label="类型">
+                            <template scope="scope">
+                                <el-tag :type="scope.row.type|statesType">
+                                    {{ scope.row.type |statesFormat }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                width="80px"
+                                prop="orderNum"
+                                label="排序号">
+                        </el-table-column>
+                        <el-table-column
+                                prop="uri"
+                                label="菜单URL">
+                        </el-table-column>
+                        <el-table-column
+                                prop="perms"
+                                label="授权标识">
+                        </el-table-column>
+                    </el-table>
+                </el-col>
+            </el-row>
+        </div>
+
+        <!--新增 / 编辑-->
+        <el-row class="panel" v-show = "!showHide">
+            <el-col class="panel-header" v-text="panelTitle">
+            </el-col>
+            <el-col style="padding: 20px;width: 550px;">
+                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="类型" prop="type">
+                        <el-radio-group v-model="ruleForm.type">
+                            <el-radio label = "0" >目录</el-radio>
+                            <el-radio label = "1" >菜单</el-radio>
+                            <el-radio label = "2" >按钮</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="菜单名称" prop="name">
+                        <el-input v-model="ruleForm.name"
+                                  placeholder="菜单名称"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="上级菜单" prop="parentName">
+                        <el-input v-model="ruleForm.parentName"
+                                  placeholder="上级菜单"
+                                  readonly="readonly"
+                                  @click.native="departmentSelect"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="菜单URL" prop="uri" v-if="ruleForm.type == 1">
+                        <el-input v-model="ruleForm.uri"
+                                  placeholder="菜单URL"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="授权标识" prop="perms"  v-if="ruleForm.type == 1 || ruleForm.type == 2">
+                        <el-input v-model="ruleForm.perms"
+                                  placeholder="多个用逗号分隔,如:user:list,user:create"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="排序号" prop="orderNum"  v-if="ruleForm.type == 0 || ruleForm.type == 1">
+                        <el-input v-model="ruleForm.orderNum"
+                                  type="number"
+                                  min="0"
+                                  placeholder="排序号"></el-input>
+                    </el-form-item>
+                    <el-form-item label="图标" prop="icon" v-if="ruleForm.type == 0 || ruleForm.type == 1">
+                        <el-input v-model="ruleForm.icon"
+                                  placeholder="菜单图标"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')" :loading="submitLoading">确定</el-button>
+                        <el-button @click="getBack">返回</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+        </el-row>
+        <el-dialog title="选择菜单" :visible.sync="treeVisible" size="tiny">
+            <ul id="zTree" class="ztree"></ul>
+            <div slot="footer" class="dialog-footer">
+                <el-button type="primary" @click.native="treeSubmit" :loading="treeLoading">确认</el-button>
+                <el-button @click.native="treeVisible = false">取消</el-button>
+            </div>
+        </el-dialog>
+    </section>
+    <script type="text/javascript" src="../../../static/js/api/sysManageApi/menuApi.js" data-th-src="@{/static/js/api/sysManageApi/menuApi.js}"></script>
+    <script type="text/javascript" src="../../../static/js/app/sysManage/menu.js" data-th-src="@{/static/js/app/sysManage/menu.js}"></script>
+</div>
+
+
+
+
+

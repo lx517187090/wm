@@ -1,0 +1,46 @@
+[
+	{
+		"name": "系统管理",
+		"url": "#",
+		"indexNum": "4",
+		"iconClass": "fa fa-cog",
+		"children": [
+			{
+				"name": "管理员管理",
+				"parentPath": "/sys",
+				"path": "/user",
+				"indexNum": "4-1"
+			},
+			{
+				"name": "部门管理",
+				"parentPath": "/sys",
+				"path": "/dept",
+				"indexNum": "4-2"
+			},
+			{
+				"name": "菜单管理",
+				"parentPath": "/sys",
+				"path": "/menu",
+				"indexNum": "4-3"
+			},
+			{
+				"name": "角色员管理",
+				"parentPath": "/sys",
+				"path": "/role",
+				"indexNum": "4-4"
+			},
+			{
+				"name": "系统日志",
+				"parentPath": "/sys",
+				"path": "/log",
+				"indexNum": "4-5"
+			},
+			{
+				"name": "流程设置",
+				"parentPath": "/sys",
+				"path": "/config",
+				"indexNum": "4-6"
+			}
+		]
+	}
+]

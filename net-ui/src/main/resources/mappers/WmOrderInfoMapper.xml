@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.vz.finance.integration.net.ui.modules.mappers.WmOrderInfoMapper">
+
+    <resultMap id="BaseResultMap" type="org.vz.finance.integration.net.ui.modules.entity.WmOrderInfo">
+        <id column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="happen_date" jdbcType="TIMESTAMP" property="happenDate" />
+        <result column="Machine_model" jdbcType="VARCHAR" property="machineModel" />
+        <result column="part" jdbcType="VARCHAR" property="part" />
+        <result column="Num" jdbcType="DECIMAL" property="num" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="fixed_telephone" jdbcType="VARCHAR" property="fixedTelephone" />
+        <result column="Mobile_phone" jdbcType="VARCHAR" property="mobilePhone" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="express" jdbcType="VARCHAR" property="express" />
+        <result column="courier_number" jdbcType="VARCHAR" property="courierNumber" />
+        <result column="SN" jdbcType="VARCHAR" property="sn" />
+        <result column="Bad_problems" jdbcType="VARCHAR" property="badProblems" />
+        <result column="parts" jdbcType="VARCHAR" property="parts" />
+        <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+        <result column="color" jdbcType="VARCHAR" property="color" />
+        <result column="appearance" jdbcType="VARCHAR" property="appearance" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    ID, happen_date, Machine_model, part, Num, name, fixed_telephone, Mobile_phone, address, 
+    express, courier_number, SN, Bad_problems, parts, create_by, create_date, update_by, 
+    update_date, color,appearance
+  </sql>
+    <select id="selectByExample" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmOrderInfoExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from wm_order_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from wm_order_info
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wm_order_info
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmOrderInfo">
+    insert into wm_order_info (ID, happen_date, Machine_model, 
+      part, Num, name, fixed_telephone, 
+      Mobile_phone, address, express, 
+      courier_number, SN, Bad_problems, 
+      parts, create_by, create_date, 
+      update_by, update_date, color,appearance
+      )
+    values (#{id,jdbcType=VARCHAR}, #{happenDate,jdbcType=TIMESTAMP}, #{machineModel,jdbcType=VARCHAR}, 
+      #{part,jdbcType=VARCHAR}, #{num,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{fixedTelephone,jdbcType=DECIMAL}, 
+      #{mobilePhone,jdbcType=DECIMAL}, #{address,jdbcType=VARCHAR}, #{express,jdbcType=VARCHAR}, 
+      #{courierNumber,jdbcType=VARCHAR}, #{sn,jdbcType=VARCHAR}, #{badProblems,jdbcType=VARCHAR}, 
+      #{parts,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{color,jdbcType=VARCHAR},
+      #{appearance,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmOrderInfo">
+        insert into wm_order_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="happenDate != null">
+                happen_date,
+            </if>
+            <if test="machineModel != null">
+                Machine_model,
+            </if>
+            <if test="part != null">
+                part,
+            </if>
+            <if test="num != null">
+                Num,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="fixedTelephone != null">
+                fixed_telephone,
+            </if>
+            <if test="mobilePhone != null">
+                Mobile_phone,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="express != null">
+                express,
+            </if>
+            <if test="courierNumber != null">
+                courier_number,
+            </if>
+            <if test="sn != null">
+                SN,
+            </if>
+            <if test="badProblems != null">
+                Bad_problems,
+            </if>
+            <if test="parts != null">
+                parts,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="color != null">
+                color,
+            </if>
+            <if test="appearance != null">
+                appearance,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="happenDate != null">
+                #{happenDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="machineModel != null">
+                #{machineModel,jdbcType=VARCHAR},
+            </if>
+            <if test="part != null">
+                #{part,jdbcType=VARCHAR},
+            </if>
+            <if test="num != null">
+                #{num,jdbcType=DECIMAL},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedTelephone != null">
+                #{fixedTelephone,jdbcType=DECIMAL},
+            </if>
+            <if test="mobilePhone != null">
+                #{mobilePhone,jdbcType=DECIMAL},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="express != null">
+                #{express,jdbcType=VARCHAR},
+            </if>
+            <if test="courierNumber != null">
+                #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="sn != null">
+                #{sn,jdbcType=VARCHAR},
+            </if>
+            <if test="badProblems != null">
+                #{badProblems,jdbcType=VARCHAR},
+            </if>
+            <if test="parts != null">
+                #{parts,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="color != null">
+                #{color,jdbcType=VARCHAR},
+            </if>
+            <if test="appearance != null">
+                #{appearance,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmOrderInfoExample" resultType="java.lang.Integer">
+        select count(*) from wm_order_info
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update wm_order_info
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=VARCHAR},
+            </if>
+            <if test="record.happenDate != null">
+                happen_date = #{record.happenDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.machineModel != null">
+                Machine_model = #{record.machineModel,jdbcType=VARCHAR},
+            </if>
+            <if test="record.part != null">
+                part = #{record.part,jdbcType=VARCHAR},
+            </if>
+            <if test="record.num != null">
+                Num = #{record.num,jdbcType=DECIMAL},
+            </if>
+            <if test="record.name != null">
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.fixedTelephone != null">
+                fixed_telephone = #{record.fixedTelephone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.mobilePhone != null">
+                Mobile_phone = #{record.mobilePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.address != null">
+                address = #{record.address,jdbcType=VARCHAR},
+            </if>
+            <if test="record.express != null">
+                express = #{record.express,jdbcType=VARCHAR},
+            </if>
+            <if test="record.courierNumber != null">
+                courier_number = #{record.courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sn != null">
+                SN = #{record.sn,jdbcType=VARCHAR},
+            </if>
+            <if test="record.badProblems != null">
+                Bad_problems = #{record.badProblems,jdbcType=VARCHAR},
+            </if>
+            <if test="record.parts != null">
+                parts = #{record.parts,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createBy != null">
+                create_by = #{record.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createDate != null">
+                create_date = #{record.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateBy != null">
+                update_by = #{record.updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.updateDate != null">
+                update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.color != null">
+                color = #{record.color,jdbcType=VARCHAR},
+            </if>
+            <if test="record.appearance != null">
+                appearance = #{record.appearance,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update wm_order_info
+        set ID = #{record.id,jdbcType=VARCHAR},
+        happen_date = #{record.happenDate,jdbcType=TIMESTAMP},
+        Machine_model = #{record.machineModel,jdbcType=VARCHAR},
+        part = #{record.part,jdbcType=VARCHAR},
+        Num = #{record.num,jdbcType=DECIMAL},
+        name = #{record.name,jdbcType=VARCHAR},
+        fixed_telephone = #{record.fixedTelephone,jdbcType=VARCHAR},
+        Mobile_phone = #{record.mobilePhone,jdbcType=VARCHAR},
+        address = #{record.address,jdbcType=VARCHAR},
+        express = #{record.express,jdbcType=VARCHAR},
+        courier_number = #{record.courierNumber,jdbcType=VARCHAR},
+        SN = #{record.sn,jdbcType=VARCHAR},
+        Bad_problems = #{record.badProblems,jdbcType=VARCHAR},
+        parts = #{record.parts,jdbcType=VARCHAR},
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+        color = #{record.color,jdbcType=VARCHAR},
+        appearance = #{record.appearance,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmOrderInfo">
+        update wm_order_info
+        <set>
+            <if test="happenDate != null">
+                happen_date = #{happenDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="machineModel != null">
+                Machine_model = #{machineModel,jdbcType=VARCHAR},
+            </if>
+            <if test="part != null">
+                part = #{part,jdbcType=VARCHAR},
+            </if>
+            <if test="num != null">
+                Num = #{num,jdbcType=DECIMAL},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedTelephone != null">
+                fixed_telephone = #{fixedTelephone,jdbcType=VARCHAR},
+            </if>
+            <if test="mobilePhone != null">
+                Mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="express != null">
+                express = #{express,jdbcType=VARCHAR},
+            </if>
+            <if test="courierNumber != null">
+                courier_number = #{courierNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="sn != null">
+                SN = #{sn,jdbcType=VARCHAR},
+            </if>
+            <if test="badProblems != null">
+                Bad_problems = #{badProblems,jdbcType=VARCHAR},
+            </if>
+            <if test="parts != null">
+                parts = #{parts,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="color != null">
+                color = #{color,jdbcType=VARCHAR},
+            </if>
+            <if test="appearance != null">
+                color = #{appearance,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmOrderInfo">
+    update wm_order_info
+    set happen_date = #{happenDate,jdbcType=TIMESTAMP},
+      Machine_model = #{machineModel,jdbcType=VARCHAR},
+      part = #{part,jdbcType=VARCHAR},
+      Num = #{num,jdbcType=DECIMAL},
+      name = #{name,jdbcType=VARCHAR},
+      fixed_telephone = #{fixedTelephone,jdbcType=VARCHAR},
+      Mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      express = #{express,jdbcType=VARCHAR},
+      courier_number = #{courierNumber,jdbcType=VARCHAR},
+      SN = #{sn,jdbcType=VARCHAR},
+      Bad_problems = #{badProblems,jdbcType=VARCHAR},
+      parts = #{parts,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      color = #{color,jdbcType=VARCHAR},
+      appearance = #{appearance,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <update id="updateByPrimaryKey2" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmOrderInfo">
+    update wm_order_info
+    set enable_='0'
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+    <select id="selectDeliver" parameterType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO" resultType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO">
+        select
+        a.ID as id,
+        b.happen_date as happenDate,
+        b.Machine_model as machineModel,
+        b.part as part,
+        b.Num as num,
+        b.name as name,
+        b.fixed_telephone as fixedTelephone,
+        b.Mobile_phone as mobilePhone,
+        b.address as address,
+        b.express as express,
+        b.courier_number as courierNumber,
+        b.SN as sn,
+        b.Bad_problems,
+        b.parts,
+        b.color,
+        b.appearance,
+        b.id as infoId,
+        a.delivery_date as deliveryDate,
+        a.delivery_type as deliveryType,
+        a.money as money,
+        a.pay_date as payDate,
+        a.pay_account as payAccount,
+        a.rmk as rmk,
+        a.delivery_sign as deliverySign,
+        a.money,
+        c.conf_key as weight,
+        d.fault_problem as faultProblem,
+        d.repair_type as repairType,
+        d.maintainer as maintainer,
+        d.rmk as rmk2
+        from wm_order_info b
+        left join wm_delivery_info a on a.info_id = b.id
+        left join wm_repair_info d on d.info_id = b.id
+        left join wm_config c on b.Machine_model = c.conf_name
+        where b.enable_ = "1"
+            <if test="name != null and name != ''">
+                and b.name like concat('%', #{name} ,'%')
+            </if>
+            <if test="mobilePhone != null and mobilePhone != ''">
+                and b.mobile_Phone like concat('%', #{mobilePhone} ,'%')
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+                and  b.courier_Number  like concat('%', #{courierNumber} ,'%')
+            </if>
+            <if test="sn != null and sn != ''">
+                and b.sn  like concat('%', #{sn} ,'%')
+            </if>
+            <if test="happenDate != null and happenDate != ''">
+                and date_format(b.happen_Date, '%Y-%m-%d') = #{happenDate}
+            </if>
+            <if test="deliveryDate != null and deliveryDate != ''">
+                and date_format(a.DELIVERY_DATE, '%Y-%m-%d') = #{deliveryDate}
+            </if>
+            <if test='deliverySign != null and deliverySign != "" and deliverySign == "1"'>
+                and a.delivery_sign =  #{deliverySign}
+            </if>
+
+            <if test='deliverySign != null and deliverySign != "" and deliverySign == "0"'>
+                 and a.delivery_sign is null
+            </if>
+    </select>
+
+    <select id="selectRepair" parameterType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO" resultType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO">
+        select
+        a.ID as id,
+        b.happen_date as happenDate,
+        b.Machine_model as machineModel,
+        b.part as part,
+        b.Num as num,
+        b.name as name,
+        b.fixed_telephone as fixedTelephone,
+        b.Mobile_phone as mobilePhone,
+        b.address as address,
+        b.express as express,
+        b.courier_number as courierNumber,
+        b.SN as sn,
+        b.Bad_problems,
+        b.parts,
+        b.color,
+        b.appearance,
+        b.id as infoId,
+        a.fault_problem as faultProblem,
+        a.repair_type as repairType,
+        a.maintainer as maintainer,
+        a.rmk as rmk
+        from wm_order_info b left join wm_repair_info a on a.info_id = b.id
+        <where>
+            <if test="name != null and name != ''">
+                b.name like concat('%', #{name} ,'%')
+            </if>
+            <if test="mobilePhone != null and mobilePhone != ''">
+                and b.mobile_Phone like concat('%', #{mobilePhone} ,'%')
+            </if>
+            <if test="courierNumber != null and courierNumber != ''">
+               and b.courier_Number like concat('%', #{courierNumber} ,'%')
+            </if>
+
+        </where>
+    </select>
+
+    <update id="updateDelevery" parameterType="string">
+    update wm_order_info
+    set delivery_date= null ,delivery_sign = null, rmk = null
+    where id = (select info_Id from wm_delivery_info where id = #{id,jdbcType=VARCHAR})
+  </update>
+</mapper>

@@ -1,0 +1,96 @@
+@charset "utf-8";
+
+/*样式重置*/
+body, h1, h2,h3,h4,h5,h6,p,dl,dd,ol,ul,form, input,textarea,th,td,select { margin:0; padding:0;}
+em,i { font-style:normal;}
+li { list-style:none;}
+a { text-decoration:none; cursor:pointer; color: inherit; }
+
+a:focus {outline:none;}
+b{ font-weight:normal;}
+img { border:none; vertical-align:top;}
+input, textarea,select{vertical-align: middle;outline: none; border:none; background:none;}
+textarea { resize:none; overflow:auto; }
+table { border-spacing:0px; border:none; border-collapse:collapse;}
+body, input, select, button, textarea { font-size: 12px;font-family:"微软雅黑",tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif;background:#fff;}
+
+html,body{
+	width: 100%;
+	height: 100%;
+}
+
+/*特殊*/
+.h0 {height: 0; line-height:0; font-size:0;}
+.ov-ellipsis { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; display:block;}
+.t-nowrap{ white-space: nowrap;}
+.select-not {-moz-user-select: none;-webkit-user-select: none; -ms-user-select: none;user-select: none;}
+.text-over { overflow:hidden; text-indent:99999px; line-height:99999; display:block;}
+
+
+/*浮动*/
+.clear { zoom:1; }
+.ovfl { overflow: hidden}
+.clear:after { content:''; display:block; clear:both; }
+.fl { float:left;}
+.fr { float:right;}
+
+
+.paddingTop10{
+	padding-top: 10px;
+}
+/*element-ui 样式重置*/
+.el-breadcrumb{
+	line-height: 24px;
+}
+
+/*修改浏览器滚动条样式*/
+body{
+	scrollbar-arrow-color: red; /*上下按钮上三角箭头的颜色*/
+	scrollbar-face-color: #CBCBCB; /*滚动条凸出部分的颜色*/
+	scrollbar-3dlight-color: blue; /*滚动条亮边的颜色*/
+	scrollbar-highlight-color: #333; /*滚动条空白部分的颜色*/
+	scrollbar-shadow-color: yellow; /*滚动条阴影的颜色*/
+	scrollbar-darkshadow-color: green; /*滚动条强阴影的颜色*/
+	scrollbar-track-color: #eee; /*滚动条背景颜色*/
+
+	scrollbar-base-color: black; /*滚动条的基本颜色*/
+	/*以上2项适用与：body、div、textarea、iframe*/
+}
+
+
+::-webkit-scrollbar {  /* 滚动条整体部分 */
+	width:10px;
+	margin-right:2px
+}
+::-webkit-scrollbar-button { /* 滚动条两端的按钮 */
+	width: 0px;
+    height: 0px;
+	background-color: #fff;
+}
+::-webkit-scrollbar:horizontal {
+	height:10px;
+	margin-bottom:2px
+}
+::-webkit-scrollbar-track {  /* 外层轨道 */
+	border-radius: 10px;
+}
+::-webkit-scrollbar-track-piece {  /*内层轨道，滚动条中间部分 */
+	background-color: #CBCBCB;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {  /* 滑块 */
+	width:10px;
+	border-radius: 5px;
+	background: #999;
+}
+::-webkit-scrollbar-corner { /* 边角 */
+	width: 10px;
+	background-color: red;
+}
+::-webkit-scrollbar-thumb:hover { /* 鼠标移入滑块 */
+	background: #666;
+}
+
+.el-menu--dark {
+    background-color: #2f4050;
+}

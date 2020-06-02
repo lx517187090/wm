@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="expires" content="Thu, 01 Jan 1970 00:00:01 GMT" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../../favicon.ico" th:href="@{/static/images/favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" href="../../static/plugin/element-ui1.4.13.min.css" th:href="@{/static/plugin/element-ui1.4.13.min.css}" />
+    <link rel="stylesheet" href="../../static/plugin/font-awesome/css/font-awesome.min.css" th:href="@{/static/plugin/font-awesome/css/font-awesome.min.css}" />
+    <link rel="stylesheet" href="../../static/css/restStyle.css" th:href="@{/static/css/restStyle.css}" />
+    <link rel="stylesheet" href="../../static/css/indexStyle.css" th:href="@{/static/css/indexStyle.css}" />
+    <link rel="stylesheet" href="../../static/plugin/ztree/css/zTreeStyle/zTreeStyle.css" th:href="@{/static/plugin/ztree/css/zTreeStyle/zTreeStyle.css}" />
+    <link rel="stylesheet" href="../../static/plugin/jquery.json-viewer.css" th:href="@{/static/plugin/jquery.json-viewer.css}" />
+</head>
+<body>
+    <div id="app">
+      <!--  <th:block th:include="common/header::#indexHeader"></th:block>-->
+        <th:block th:include="common/main"></th:block>
+        <th:block th:include="common/footer"></th:block>
+    </div>
+
+    <script type="text/javascript" th:inline="javascript">
+        var ctx = [[${#request.contextPath}]];
+        var userName = [[${session.CURRENT_USER.username}]];
+    </script>
+    <script type="text/javascript" src="../../static/js/jquery-1.11.3.js" th:src="@{/static/js/jquery-1.11.3.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/polyfill.min.js" th:src="@{/static/plugin/polyfill.min.js}" ></script>
+    <script type="text/javascript" src="../../static/plugin/vue2.5.16.min.js" th:src="@{/static/plugin/vue2.5.16.min.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/element-ui1.4.13.min.js" th:src="@{/static/plugin/element-ui1.4.13.min.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/axios.min.js" th:src="@{/static/plugin/axios.min.js}" ></script>
+    <script type="text/javascript" src="../../static/js/api/publicApi.js" th:src="@{/static/js/api/publicApi.js}"></script>
+    <script type="text/javascript" src="../../static/js/router/route.js" th:src="@{/static/js/router/route.js}"></script>
+    <script type="text/javascript" src="../../static/js/router/createRouter.js" th:src="@{/static/js/router/createRouter.js}"></script>
+    <script type="text/javascript" src="../../static/js/app/index.js" th:src="@{/static/js/app/index.js}"></script>
+    <script type="text/javascript" src="../../static/js/utils/fetch.js" th:src="@{/static/js/utils/fetch.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/ie9-oninput-polyfill.js" th:src="@{/static/plugin/ie9-oninput-polyfill.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/ztree/js/jquery.ztree.core.js" th:src="@{/static/plugin/ztree/js/jquery.ztree.core.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/ztree/js/jquery.ztree.excheck.js" th:src="@{/static/plugin/ztree/js/jquery.ztree.excheck.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/jquery.json-viewer.js" th:src="@{/static/plugin/jquery.json-viewer.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/math.min.js" th:src="@{/static/plugin/math.min.js}"></script>
+</body>
+</html>

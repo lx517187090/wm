@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="expires" content="Thu, 01 Jan 1970 00:00:01 GMT" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登录</title>
+    <link rel="shortcut icon" href="../../static/images/favicon.ico" th:href="@{/static/images/favicon.ico}" type="image/x-icon" />
+    <link rel="stylesheet" href="../../static/plugin/element-ui1.4.13.min.css" th:href="@{/static/plugin/element-ui1.4.13.min.css}" />
+    <link rel="stylesheet" href="../../static/plugin/font-awesome/css/font-awesome.min.css" th:href="@{/static/plugin/font-awesome/css/font-awesome.min.css}" />
+    <link rel="stylesheet" href="../../static/css/restStyle.css" th:href="@{/static/css/restStyle.css}" />
+    <link rel="stylesheet" href="../../static/css/loginStyle.css" th:href="@{/static/css/loginStyle.css}" />
+    <script th:inline="javascript">
+        var ctx = [[${#request.contextPath}]]
+    </script>
+    <script type="text/javascript" src="../../static/plugin/polyfill.min.js" th:src="@{/static/plugin/polyfill.min.js}" ></script>
+    <script type="text/javascript" src="../../static/plugin/vue2.5.16.min.js" th:src="@{/static/plugin/vue2.5.16.min.js}"></script>
+    <script type="text/javascript" src="../../static/plugin/element-ui1.4.13.min.js" th:src="@{/static/plugin/element-ui1.4.13.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/api/loginApi/login.js" th:src="@{/static/js/api/loginApi/login.js}"></script>
+
+</head>
+<body>
+    <div id="loginApp">
+        <div class="login-container">
+            <div class="header">
+                <div class="vz-logo">
+                    <img src="../../static/images/wm-logo.png" data-th-src="@{/static/images/wm-logo.png}"/>
+                </div>
+            </div>
+            <div class="login_bg"></div>
+            <el-form autoComplete="on"
+                     :model="loginForm"
+                     :rules="loginRules"
+                     ref="loginForm"
+                     label-position="left"
+                     label-width="0px"
+                     class="card-box login-form">
+                <h3 class="title">用户登录</h3>
+                <el-form-item prop="username" style="border: 1px solid #e1e1e1;">
+                    <span class="svg-container"><i class="fa fa-user fa-2x" aria-hidden="true"></i></span>
+                    <el-input type="text"
+                              v-model="loginForm.username"
+                              auto-complete="off"
+                              placeholder="账号">
+                    </el-input>
+                </el-form-item>
+                <el-form-item prop="passwd" style="border: 1px solid #e1e1e1;">
+                    <span class="svg-container"><i class="fa fa-key fa-2x" aria-hidden="true"></i></span>
+                    <el-input type="password"
+                              v-model="loginForm.passwd"
+                              auto-complete="off"
+                              @keyup.enter.native="handleLogin"
+                              placeholder="密码">
+                    </el-input>
+                </el-form-item>
+                <!--<div style="height: 70px;">
+                    <el-form-item prop="captcha" style="border: 1px solid #e1e1e1;width: 200px;float: left;margin-right: 18px;">
+                        <span class="svg-container"><i class="fa fa-shield fa-2x" aria-hidden="true"></i></span>
+                        <el-input type="captcha"
+                                  style="width: 150px;"
+                                  v-model="loginForm.captcha"
+                                  @keyup.enter.native="handleLogin"
+                                  auto-complete="off"
+                                  placeholder="验证码">
+                        </el-input>
+                    </el-form-item>
+                    <img style="width: 180px;float: left;cursor: pointer" :src="captchaSrc" alt="" @click="restCaptcha">
+                </div>-->
+
+               <!-- <el-form-item>
+                    <el-row>
+                        <el-col :span="16">
+                            <img :src="captchaSrc" alt="" @click="restCaptcha">
+                        </el-col>
+                        <el-col :span="6" style="line-height: 50px;">
+                            <el-button type="text" @click="restCaptcha">点击刷新</el-button>
+                        </el-col>
+                    </el-row>
+                </el-form-item>-->
+                <el-form-item>
+                    <el-button type="primary"
+                               style="width:100%;"
+                               :loading="loading"
+                               @click.native.prevent="handleLogin">
+                        登录
+                    </el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../static/plugin/axios.min.js" th:src="@{/static/plugin/axios.min.js}" ></script>
+<script type="text/javascript" src="../../static/js/utils/fetch.js" th:src="@{/static/js/utils/fetch.js}"></script>
+<script type="text/javascript" src="../../static/js/app/login/login.js" th:src="@{/static/js/app/login/login.js}"></script>
+</html>

@@ -1,0 +1,33 @@
+<!--主体部分-->
+<div class="content_area" >
+    <!--引入侧边栏-->
+    <div style="height: 100%;" data-th-include="common/asidebar"></div>
+    <!--右侧内容区域-->
+    <div class="content_right" v-bind:style="{paddingLeft: activeWidth + 'px'}">
+        <el-row id="main_content" style="border: 1px solid #ebebeb;">
+            <th:block th:include="common/header::#indexHeader"></th:block>
+            <el-col style="padding:10px;border-bottom:1px solid #ebebeb;">
+                <!--菜单折叠按钮-->
+                <el-row>
+                    <div class="menu_wrap">
+                        <img src="../../../static/images/menu-icon.png" th:src="@{/static/images/menu-icon.png}" alt=""
+                             v-bind:class="{ orgTrans: isCollapse, 'trans': !isCollapse }"
+                             @click="collapseChange" />
+                    </div>
+                    <!--面包屑导航-->
+                    <div>
+                        <el-breadcrumb separator-class="el-icon-arrow-right">
+                            <el-breadcrumb-item><span v-text="parentName"></span></el-breadcrumb-item>
+                            <el-breadcrumb-item><span v-text="childName"></span></el-breadcrumb-item>
+                        </el-breadcrumb>
+                    </div>
+                </el-row>
+            </el-col>
+            <el-col>
+                <div id="content_table" style="padding: 10px;height: 600px;" v-loading.body="loading">
+                    <!--其他的页面嵌套区域-->
+                </div>
+            </el-col>
+        </el-row>
+    </div>
+</div>

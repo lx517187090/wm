@@ -1,0 +1,149 @@
+<div id="parameterApp">
+    <section>
+        <div v-show="showHide">
+            <el-row>
+                <el-col :span="5">
+                    <el-input v-model="name" size="small" placeholder="参数名"></el-input>
+                </el-col>
+                <el-col :span="17">
+                    <el-button style="margin-left:12px;" size="small" icon="search" @click="searchInfo" :loading="searchLoading">查询</el-button>
+                    <el-button shiro:hasPermission="sys:parameter:save" type="primary" size="small" icon="plus" @click="addInfo">新增</el-button>
+                    <el-button shiro:hasPermission="sys:parameter:update" type="primary" size="small" icon="edit" @click="modifyInfo">修改</el-button>
+                    <el-button shiro:hasPermission="sys:parameter:delete" type="primary" size="small" icon="delete" @click="deleteInfo">删除</el-button>
+                </el-col>
+            </el-row>
+            <el-row class="paddingTop10">
+                <el-col>
+                    <el-table
+                            ref="multipleTable"
+                            :data="tableData"
+                            v-loading="tableLoading"
+                            border
+                            tooltip-effect="dark"
+                            style="width: 100%"
+                            @selection-change="handleSelectionChange">
+                        <el-table-column
+                                label="序号"
+                                width="45">
+                            <template scope="scope">
+                                <span>{{(scope.$index +1)+(currentPage-1)*size}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                type="selection"
+                                width="40">
+                        </el-table-column>
+                        <el-table-column
+                                prop="key"
+                                label="所属组">
+                        </el-table-column>
+                        <el-table-column
+                                prop="name"
+                                label="参数名">
+                        </el-table-column>
+                        <el-table-column
+                                width="100"
+                                prop="value"
+                                label="参数值"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                width="80"
+                                label="启用状态">
+                            <template scope="scope">
+                                <el-tag :type="scope.row.enabled|statesType">
+                                    {{ scope.row.enabled | enabledFilter }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                width="80"
+                                label="可见状态">
+                            <template scope="scope">
+                                <el-tag :type="scope.row.status|statesType">
+                                    {{ scope.row.status | statusFilter }}
+                                </el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column
+                                prop="remark"
+                                label="备注">
+                        </el-table-column>
+                    </el-table>
+                </el-col>
+            </el-row>
+        </div>
+
+        <!--新增 / 编辑-->
+        <el-row class="panel" v-show = "!showHide">
+            <el-col class="panel-header" v-text="panelTitle">
+            </el-col>
+            <el-col style="padding: 20px;width: 550px;">
+                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                    <el-form-item label="所属组" prop="key">
+                        <el-input v-model="ruleForm.key"
+                                  placeholder="所属组"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="参数名" prop="name">
+                        <el-input v-model="ruleForm.name"
+                                  placeholder="参数名"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="参数值" prop="value">
+                        <el-input v-model="ruleForm.value"
+                                  placeholder="参数值"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item label="是否启用" prop="enabled">
+                        <el-select size="small"  v-model="ruleForm.enabled" placeholder="请选择">
+                            <el-option>请选择</el-option>
+                            <el-option
+                                    v-for="item in enabledOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="是否可见" prop="status">
+                        <el-select size="small"  v-model="ruleForm.status" placeholder="请选择">
+                            <el-option>请选择</el-option>
+                            <el-option
+                                    v-for="item in statusOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="备注" prop="remark">
+                        <el-input v-model="ruleForm.remark"
+                                  placeholder="备注"
+                        ></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
+                        <el-button @click="getBack">返回</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+        </el-row>
+        <!--分页-->
+        <el-row>
+            <el-col :span="24" style="padding-top: 20px;text-align: right;">
+                <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="currentPage"
+                        :page-sizes="[10, 20, 30, 40]"
+                        :page-size="size"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="total">
+                </el-pagination>
+            </el-col>
+        </el-row>
+    </section>
+    <script type="text/javascript" src="../../../static/js/api/sysManageApi/parameterApi.js" data-th-src="@{/static/js/api/sysManageApi/parameterApi.js}"></script>
+    <script type="text/javascript" src="../../../static/js/app/sysManage/parameter.js" data-th-src="@{/static/js/app/sysManage/parameter.js}"></script>
+</div>

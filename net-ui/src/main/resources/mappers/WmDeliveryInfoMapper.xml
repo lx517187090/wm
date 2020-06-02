@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.vz.finance.integration.net.ui.modules.mappers.WmDeliveryInfoMapper" >
+  <resultMap id="BaseResultMap" type="org.vz.finance.integration.net.ui.modules.entity.WmDeliveryInfo" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="info_ID" property="infoId" jdbcType="VARCHAR" />
+    <result column="delivery_date" property="deliveryDate" jdbcType="TIMESTAMP" />
+    <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+    <result column="pay_account" property="payAccount" jdbcType="VARCHAR" />
+    <result column="rmk" property="rmk" jdbcType="VARCHAR" />
+    <result column="delivery_sign" property="deliverySign" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, info_ID, delivery_date, delivery_type, money, pay_date, pay_account, rmk
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmDeliveryInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from wm_delivery_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wm_delivery_info
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wm_delivery_info
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmDeliveryInfo" >
+    insert into wm_delivery_info (ID, info_ID, delivery_date, 
+      delivery_type, money, pay_date, 
+      pay_account, rmk,delivery_sign)
+    values (#{id,jdbcType=VARCHAR}, #{infoId,jdbcType=VARCHAR}, #{deliveryDate,jdbcType=TIMESTAMP}, 
+      #{deliveryType,jdbcType=VARCHAR}, #{money,jdbcType=DECIMAL}, #{payDate,jdbcType=TIMESTAMP}, 
+      #{payAccount,jdbcType=VARCHAR}, #{rmk,jdbcType=VARCHAR},#{deliverySign,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmDeliveryInfo" >
+    insert into wm_delivery_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="infoId != null" >
+        info_ID,
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date,
+      </if>
+      <if test="deliveryType != null" >
+        delivery_type,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="payDate != null" >
+        pay_date,
+      </if>
+      <if test="payAccount != null" >
+        pay_account,
+      </if>
+      <if test="rmk != null" >
+        rmk,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null" >
+        #{infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryType != null" >
+        #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="payDate != null" >
+        #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payAccount != null" >
+        #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk != null" >
+        #{rmk,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmDeliveryInfoExample" resultType="java.lang.Integer" >
+    select count(*) from wm_delivery_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update wm_delivery_info
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.infoId != null" >
+        info_ID = #{record.infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliveryDate != null" >
+        delivery_date = #{record.deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deliveryType != null" >
+        delivery_type = #{record.deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payDate != null" >
+        pay_date = #{record.payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payAccount != null" >
+        pay_account = #{record.payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rmk != null" >
+        rmk = #{record.rmk,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update wm_delivery_info
+    set ID = #{record.id,jdbcType=VARCHAR},
+      info_ID = #{record.infoId,jdbcType=VARCHAR},
+      delivery_date = #{record.deliveryDate,jdbcType=TIMESTAMP},
+      delivery_type = #{record.deliveryType,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DECIMAL},
+      pay_date = #{record.payDate,jdbcType=TIMESTAMP},
+      pay_account = #{record.payAccount,jdbcType=VARCHAR},
+      rmk = #{record.rmk,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmDeliveryInfo" >
+    update wm_delivery_info
+    <set >
+      <if test="infoId != null" >
+        info_ID = #{infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryType != null" >
+        delivery_type = #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="payDate != null" >
+        pay_date = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payAccount != null" >
+        pay_account = #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk != null" >
+        rmk = #{rmk,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmDeliveryInfo" >
+    update wm_delivery_info
+    set info_ID = #{infoId,jdbcType=VARCHAR},
+      delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      delivery_type = #{deliveryType,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      pay_date = #{payDate,jdbcType=TIMESTAMP},
+      pay_account = #{payAccount,jdbcType=VARCHAR},
+      rmk = #{rmk,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey2" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmDeliveryInfo" >
+    update wm_delivery_info
+    set enable_="0" where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectInfo" resultType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO" >
+    SELECT
+    a.id AS id,
+    date_format(a.happen_date,'%Y-%m-%d' ) AS happenDate,
+    Machine_model AS machineModel,
+    part AS part,
+    Num AS num,
+    NAME AS name,
+    fixed_telephone AS fixedTelephone,
+    Mobile_phone AS mobilePhone,
+    address AS address,
+    express AS express,
+    courier_number AS courierNumber,
+    a.SN AS sn,
+    parts AS parts,
+    color AS color,
+    appearance AS appearance,
+    Bad_problems as badProblems,
+    b.rmk AS rmk,
+    b.delivery_type AS deliveryType,
+    b.money AS money,
+    date_format( b.delivery_Date,'%Y-%m-%d') AS deliveryDate,
+    b.pay_account AS payAccount,
+    b.delivery_sign AS deliverySign,
+    b.rmk as rmk,
+    c.fault_problem as faultProblem,
+    c.repair_type as repairType,
+    c.rmk as rmk2
+    from wm_order_info a
+    left join wm_delivery_info b on a.id = b.info_id  and b.enable_ = '1'
+    left join wm_repair_info c on a.id = c.info_id and c.enable_ = '1'
+    where a.enable_ = '1'
+    <if test="happenDate != null and happenDate != ''">
+      and date_format(a.happen_date,'%Y-%m-%d') = #{happenDate}
+    </if>
+    <if test="name != null and name != ''">
+      and a.name like concat('%', #{name}, '%')
+    </if>
+    <if test="mobilePhone != null and mobilePhone != ''">
+      and a.mobile_phone like concat('%', #{mobilePhone}, '%')
+    </if>
+    <if test="courierNumber != null and courierNumber != ''">
+      and a.courier_Number like concat('%', #{courierNumber}, '%')
+    </if>
+    <if test="sn != null and sn != ''">
+      and a.SN like concat('%', #{sn}, '%')
+    </if>
+    order by  happen_date desc
+  </select>
+
+  <select id="selectDelivery" resultType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO" >
+    SELECT
+	a.id AS infoId,
+	date_format(a.happen_date,'%Y-%m-%d' ) AS happenDate,
+	Machine_model AS machineModel,
+	part AS part,
+	Num AS num,
+	NAME AS name,
+	fixed_telephone AS fixedTelephone,
+	Mobile_phone AS mobilePhone,
+	address AS address,
+	express AS express,
+	courier_number AS courierNumber,
+	a.SN AS sn,
+	parts AS parts,
+	color AS color,
+	appearance AS appearance,
+	Bad_problems as badProblems,
+	b.rmk AS rmk,
+	c.conf_key as weight,
+	date_format( b.delivery_date,'%Y-%m-%d' ) AS deliveryDate,
+    b.id as id,
+	b.delivery_type AS deliveryType,
+	b.money AS money,
+	date_format( b.pay_date,'%Y-%m-%d') AS payDate,
+	b.pay_account AS payAccount,
+	b.delivery_sign AS deliverySign,
+    d.fault_problem as faultProblem,
+    d.repair_type as repairType,
+    d.rmk as rmk2
+    from wm_order_info a
+    left join wm_delivery_info b  on a.id = b.info_id and b.enable_ = '1'
+    left join wm_repair_info d  on a.id = d.info_id and d.enable_ = '1'
+    left join wm_config c on c.conf_name = a.Machine_model
+    where a.enable_ = '1'
+    <if test="happenDate != null and happenDate != ''">
+        and date_format(a.happen_date,'%Y-%m-%d') = #{happenDate}
+    </if>
+    <if test="name != null and name != ''">
+      and a.name like concat('%', #{name}, '%')
+    </if>
+    <if test="mobilePhone != null and mobilePhone != ''">
+      and a.mobile_phone like concat('%', #{mobilePhone}, '%')
+    </if>
+    <if test="courierNumber != null and courierNumber != ''">
+      and a.courier_Number like concat('%', #{courierNumber}, '%')
+    </if>
+    <if test="sn != null and sn != ''">
+      and a.SN like concat('%', #{sn}, '%')
+    </if>
+    <if test="deliveryDate != null and deliveryDate != ''">
+      and date_format(b.delivery_date,'%Y-%m-%d') = #{deliveryDate}
+    </if>
+   <if test='deliverySign != null  and deliverySign == "1" '>
+      and b.delivery_date is not null
+    </if>
+
+    <if test='deliverySign != null and deliverySign == "0" '>
+      and b.delivery_date is null
+    </if>
+    order by a.happen_date desc
+  </select>
+
+  <select id="selectRepair" resultType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO" >
+    SELECT
+    a.id AS infoId,
+    date_format(a.happen_date,'%Y-%m-%d' ) AS happenDate,
+    Machine_model AS machineModel,
+    part AS part,
+    Num AS num,
+    NAME AS name,
+    fixed_telephone AS fixedTelephone,
+    Mobile_phone AS mobilePhone,
+    address AS address,
+    express AS express,
+    courier_number AS courierNumber,
+    a.SN AS sn,
+    parts AS parts,
+    color AS color,
+    appearance AS appearance,
+    Bad_problems as badProblems,
+    b.rmk AS rmk,
+    b.id as id,
+    b.fault_problem as faultProblem,
+    b.repair_type as repairType,
+    b.maintainer as maintainer,
+    b.rmk as rmk2
+    from wm_order_info a left join wm_repair_info b
+    on a.id = b.info_id and b.enable_ = '1'
+    where a.enable_ = '1'
+    <if test="name != null and name != ''">
+      and a.name like concat('%', #{name}, '%')
+    </if>
+    <if test="mobilePhone != null and mobilePhone != ''">
+      and a.mobile_phone like concat('%', #{mobilePhone}, '%')
+    </if>
+    <if test="courierNumber != null and courierNumber != ''">
+      and a.courier_Number like concat('%', #{courierNumber}, '%')
+    </if>
+    order by a.happen_date desc
+  </select>
+</mapper>

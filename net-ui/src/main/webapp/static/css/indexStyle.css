@@ -1,0 +1,218 @@
+
+*{
+    box-sizing: border-box;
+}
+/*header 样式*/
+.header{
+	padding-right: 20px;
+	padding-left:5px;
+	/*background: #b1d1f8;*/
+	height: 50px;
+	border-bottom: 1px solid #e6e6e6;
+    color: #333;
+}
+.bank_log{
+	width: 158px;
+	height: 50px;
+	line-height: 50px;
+	padding-right: 8px;
+	float: left;
+}
+.bank_log img{
+	height: 40px;
+    width: 152px;
+	position: relative;
+	top: 4px;
+}
+
+.sys_name{
+	float: left;
+	line-height: 50px;
+
+	font-weight: 500;
+	font-size: 20px;
+}
+.sys_name>span{
+	padding: 0px 10px;
+	border-left: 1px solid #333;
+}
+.header_left{
+	float: left;
+}
+.header_right{
+	float: right;
+}
+.logout{
+	line-height: 50px;
+	font-size: 14px;
+}
+.logout> img{
+	line-height: 50px;
+	position: relative;
+	top: 7px;
+    padding: 0px 5px;
+}
+.logout>a{
+	color: #2f4050;
+}
+.logout>a:hover{
+    text-decoration: underline;
+}
+
+/*footer 样式*/
+.footer{
+	background: #2f4050;
+	padding:0px 20px;
+}
+.footer >p{
+	color: #FFF;
+	font-size: 12px;
+	line-height: 30px;
+}
+
+
+.content_area{
+	position: relative;
+}
+.content_right{
+    padding-left: 180px;
+	margin-left: 10px;
+	transition: padding-left 0.3s;
+	-moz-transition: padding-left 0.3s ease;	
+	-webkit-transition: padding-left 0.3s ease;	
+	-o-transition: padding-left 0.3s ease;	
+}
+
+.drop_menu{
+    height: inherit;
+    width: 180px;
+	/*border-top: 1px solid #e6e6e6;
+	border-right: 1px solid #e6e6e6;
+	border-bottom: 1px solid #e6e6e6;*/
+	box-sizing: border-box;
+	overflow-x: hidden;
+	transition: width 0.3s ease;
+	-moz-transition: width 0.3s ease;	
+	-webkit-transition: width 0.3s ease;	
+	-o-transition: width 0.3s ease;
+	background-color:#2f4050 ;
+	position: absolute;
+	left: 0px;
+}
+
+.drop_menu_active{
+	width: 64px;
+}
+
+
+
+.trans{
+	transform: rotate(90deg);
+	-ms-transform: rotate(90deg);	/* IE 9 */
+	-moz-transform: rotate(90deg); 	/* Firefox */
+	-webkit-transform: rotate(90deg); /* Safari 和 Chrome */
+	-o-transform: rotate(90deg);	/* Opera */
+}
+
+.orgTrans{
+	-ms-transform: rotate(0deg);	 /* IE 9 */
+	-moz-transform: rotate(0deg); 	 /* Firefox */
+	-webkit-transform: rotate(0deg);/* Safari 和 Chrome */
+	-o-transform: rotate(0deg);	     /* Opera */
+	 transform: rotate(0deg);
+}
+
+.menu_wrap{
+	width: 40px;
+	height: 24px;
+	float: left;
+	display: table;
+	cursor: pointer;
+}
+
+.menu_wrap img{
+	width:24px;
+    height: 19px;
+	position: relative;
+	top: 4px;
+	-webkit-transition: -webkit-transform 0.3s ease-out;
+    -moz-transition: -moz-transform 0.3s ease-out;
+    -o-transition: -o-transform 0.3s ease-out;
+    -ms-transition: -ms-transform 0.3s ease-out;
+}
+
+.input_label{
+	width: 90px;
+	text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: 12px;
+    color: #606266;
+    line-height: 30px;
+    padding: 0 5px 0 0;
+    box-sizing: border-box;
+}
+
+.input_wrap{
+	margin-left: 90px;
+}
+
+
+.inlineBlock{
+	display: block;
+}
+
+.el-menu--horizontal .el-menu-item a, .el-menu--horizontal .el-menu-item a:hover {
+	color: inherit;
+}
+
+.iconIsActive{
+	transform:rotate(90deg);
+	-ms-transform:rotate(90deg); 	/* IE 9 */
+	-moz-transform:rotate(90deg); 	/* Firefox */
+	-webkit-transform:rotate(90deg); /* Safari 和 Chrome */
+	-o-transform:rotate(90deg); 	/* Opera */
+}
+
+/*重置table表格样式*/
+.el-table{
+	font-size: 12px;
+}
+
+.el-table .cell, .el-table th>div {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.el-dropdown-link {
+	cursor: pointer;
+}
+
+
+/*重置遮罩层样式*/
+.el-loading-mask{
+	z-index: 2000;
+}
+
+/*设置艺术字体*/
+.owText {
+	text-align: center;
+	-webkit-text-stroke: 2px #fff;
+	position: relative;
+	text-transform: uppercase;
+	color: #409EFF;
+	font-size: 40px;
+	font-size: 4vw;
+	letter-spacing: 1.2vw;
+	font-weight: 700;
+	text-shadow: 0 1px 0 #4a4a4e, -1px -1px 0 #4a4a4e, /*main 3d shadow*/ -1px 0px 0 #343437, -2px 1px 0 #343437, -3px 2px 0 #313134, -4px 3px 0 #2f2f31, -5px 4px 0 #2c2c2f, -6px 5px 0 #2a2a2c, -7px 6px 0 #27272a, -8px 7px 0 #252527, -9px 8px 0 #232324, -10px 9px 0 #202022, -11px 10px 0 #1e1e1f, -12px 11px 0 #1b1b1d, -13px 12px 0 #19191a, -14px 13px 0 #161617, -15px 14px 0 #141415, -16px 15px 0 #111112, /*top right*/ 0 -1px 1px #ffffff, 0 -2px 0px #ffffff, /*bottom left corner*/ -15px 14px 0px #ffffff, -16px 15px 0px #ffffff, -17px 16px 0px #ffffff, -18px 17px 0px #ffffff, -2px -1px 0 #ffffff, -3px 0px 0 #ffffff, /*top left corner*/ -19px 15px 0 #ffffff, -18px 14px 0 #ffffff, -17px 13px 0 #ffffff, -16px 12px 0 #ffffff, -15px 11px 0 #ffffff, -14px 10px 0 #ffffff, -13px 9px 0 #ffffff, -12px 8px 0 #ffffff, -11px 7px 0 #ffffff, -10px 6px 0 #ffffff, -9px 5px 0 #ffffff, -8px 4px 0 #ffffff, -7px 3px 0 #ffffff, -6px 2px 0 #ffffff, -5px 1px 0 #ffffff, -4px 0px 0 #ffffff, /*lower right / (upper right side for capital T like H etc letters. */ 0px 2px 0px #ffffff, -1px 3px 0px #ffffff, -2px 4px 0px #ffffff, -3px 5px 0px #ffffff, -4px 6px 0px #ffffff, -5px 7px 0px #ffffff, -6px 8px 0px #ffffff, -7px 9px 0px #ffffff, -8px 10px 0px #ffffff, -9px 11px 0px #ffffff, -10px 12px 0px #ffffff, -11px 13px 0px #ffffff, -12px 14px 0px #ffffff, -13px 15px 0px #ffffff, -14px 16px 0px #ffffff, -15px 17px 0px #ffffff;
+}
+
+/*重置el-select 框在IE 和 fireFox浏览器上对不齐样式*/
+.el-select {
+	width: 100%;
+}
+
+.el-tooltip__popper {
+	max-width:20%
+}

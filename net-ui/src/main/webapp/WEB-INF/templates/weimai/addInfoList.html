@@ -1,0 +1,220 @@
+<!--定义当前页面对应的vue示例-->
+<div id="orderInfoApp">
+    <div v-show="showHide">
+
+        <!--定义查询参数表单-->
+        <el-row :gutter="20">
+            <el-col :span="6">
+                <div class="input_label">姓名:</div>
+                <div class="input_wrap">
+                    <el-input placeholder="请输入姓名" size="small" v-model="formObj.name" clearable></el-input>
+                </div>
+            </el-col>
+
+            <el-col :span="6">
+                <div class="input_label">手机号:</div>
+                <div class="input_wrap">
+                    <el-input placeholder="请输入手机号" size="small" v-model="formObj.mobilePhone" clearable></el-input>
+                </div>
+            </el-col>
+
+            <el-col :span="6">
+                <div class="input_label">快递单号:</div>
+                <div class="input_wrap">
+                    <el-input placeholder="请输入快递单号" size="small" v-model="formObj.courierNumber" clearable></el-input>
+                </div>
+            </el-col>
+        </el-row>
+
+
+        <el-row :gutter="20" class="paddingTop10">
+            <el-col :span="17">
+                <el-button style="margin-left:12px;" size="small" icon="search" :loading="searchLoading"
+                           @click="onSubmit">查询
+                </el-button>
+                <el-button shiro:hasPermission="weimai:info:save" type="primary" size="small" icon="plus"
+                           @click="addInfo">新增
+                </el-button>
+                <el-button shiro:hasPermission="weimai:info:update" type="primary" size="small" icon="edit"
+                           @click="modifyInfo">修改
+                </el-button>
+                <el-button shiro:hasPermission="weimai:info:delete" type="primary" size="small" icon="delete"
+                           @click="deleteInfo">删除
+                </el-button>
+            </el-col>
+        </el-row>
+        <!--定义展示表格-->
+
+        <el-row class="paddingTop10">
+            <el-col>
+                <el-table :data="tableData" v-loading="tableLoading" @selection-change="handleSelectionChange" border>
+                    <el-table-column type="selection" width="55" fixed="left"></el-table-column>
+                    <el-table-column prop="happenDate" label="收件时间" width="140"></el-table-column>
+                    <el-table-column prop="machineModel" label="机器型号" width="80"></el-table-column>
+                    <!--<el-table-column prop="part" label="分别" width="60"></el-table-column>-->
+                    <el-table-column prop="num" label="数量" width="50"></el-table-column>
+                    <el-table-column prop="name" label="姓名" width="80"></el-table-column>
+                    <el-table-column prop="fixedTelephone" label="固定电话" width="140"
+                                     show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="mobilePhone" label="手机" width="140"></el-table-column>
+                    <el-table-column prop="address" label="地址" width="250" ></el-table-column>
+                    <el-table-column prop="express" label="快递公司" width="80"></el-table-column>
+                    <el-table-column prop="courierNumber" label="快递单号" width="140"></el-table-column>
+                    <el-table-column prop="color" label="颜色" width="60"></el-table-column>
+                    <el-table-column prop="sn" label="SN" width="60">
+                    </el-table-column>
+                    <el-table-column prop="badProblems" label="不良问题" width="130"
+                                     show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column prop="parts" label="配件" width="90"></el-table-column>
+                    <el-table-column prop="appearance" label="外观" width="90"></el-table-column>
+                    <el-table-column prop="faultProblem" label="故障问题" width="90"></el-table-column>
+                    <el-table-column prop="repairType" label="维修方式" width="90"></el-table-column>
+                    <el-table-column prop="rmk2" label="维修备注" width="90"></el-table-column>
+                    <el-table-column prop="deliveryDate" label="寄出时间" width="90"></el-table-column>
+                    <el-table-column prop="rmk" label="派件备注" width="90"></el-table-column>
+                </el-table>
+                <!--导入分页页面-->
+                <div data-th-include="common/pagination"></div>
+                <!--<el-row>
+                    <el-col :span="24" style="padding-top: 20px;text-align: right;">
+                        <el-pagination
+                                @size-change="handleSizeChange"
+                                @current-change="handleCurrentChange"
+                                :current-page="currentPage"
+                                :page-sizes="[10, 20, 30, 40]"
+                                :page-size="size"
+                                layout="total, sizes, prev, pager, next, jumper"
+                                :total="total">
+                        </el-pagination>
+                    </el-col>
+                </el-row>-->
+                <div></div>
+            </el-col>
+        </el-row>
+    </div>
+
+
+    <!--修改/增加-->
+    <el-row class="panel" v-show="!showHide">
+        <el-col class="panel-header" v-text="panelTitle">
+        </el-col>
+        <el-col style="padding: 20px;width: 550px;">
+                <el-form :model="orderForm" :rules="rules" ref="orderForm" label-width="120px" class="demo-orderForm">
+                    <el-form-item label="收件时间" prop="happenDate">
+                        <el-date-picker
+                                size="small"
+                                v-model="orderForm.happenDate"
+                                type="date"
+                                value-format="yyyy-MM-dd"
+                                style="width: 100%">
+                        </el-date-picker>
+                    </el-form-item>
+
+
+                    <el-form-item label="机器型号" prop="machineModel">
+                        <el-select size="small" v-model="orderForm.machineModel"
+                                   placeholder="请选择" filterable
+                                   default-first-option clearable>
+                            <el-option>请选择</el-option>
+                            <el-option
+                                    v-for="item in machineList"
+                                    :key="item.confKey"
+                                    :label="item.confName"
+                                    :value="item.confName">
+                                <span style="float: left">{{ item.confName }}</span>
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="数量" prop="num">
+                        <el-input v-model="orderForm.num" placeholder="数量"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="姓名" prop="name">
+                        <el-input v-model="orderForm.name" placeholder="姓名"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="固定电话" prop="fixedTelephone">
+                        <el-input v-model="orderForm.fixedTelephone" placeholder="固定电话"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="手机" prop="mobilePhone">
+                        <el-input v-model="orderForm.mobilePhone" placeholder="手机"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="地址" prop="address">
+                        <el-input v-model="orderForm.address" placeholder="地址"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="快递公司" prop="express">
+                        <el-select size="small" v-model="orderForm.express" placeholder="请选择" filterable
+                                   default-first-option clearable v-if="expressList">
+                            <el-option>请选择</el-option>
+                            <el-option
+                                    v-for="item in expressList"
+                                    :key="item.confKey"
+                                    :label="item.confName"
+                                    :value="item.confName">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="快递单号" prop="courierNumber">
+                        <el-input v-model="orderForm.courierNumber" placeholder="快递单号"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="颜色" prop="color">
+                        <el-select size="small" v-model="orderForm.color" placeholder="请选择" filterable
+                                   default-first-option v-if="colorList"
+                                   clearable>
+                            <el-option>请选择</el-option>
+                            <el-option
+                                    v-for="item in colorList"
+                                    :key="item.confKey"
+                                    :label="item.confName"
+                                    :value="item.confName">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="SN" prop="sn">
+                        <el-input v-model="orderForm.sn" placeholder="SN"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="不良问题" prop="badProblems">
+                        <el-input v-model="orderForm.badProblems" placeholder="不良问题"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="配件" prop="parts">
+                        <!--<el-input v-model="orderForm.parts" placeholder="配件"></el-input>-->
+                        <el-select size="small" v-model="orderForm.parts" placeholder="请选择" filterable
+                                   default-first-option v-if="partsList"
+                                   multiple clearable>
+                            <el-option>请选择</el-option>
+                            <el-option
+                                    v-for="item in partsList"
+                                    :key="item.confKey"
+                                    :label="item.confName"
+                                    :value="item.confName">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="外观" prop="appearance">
+                        <el-input v-model="orderForm.appearance" placeholder="外观"></el-input>
+                    </el-form-item>
+
+                    <el-form-item :span="4" style="padding: 10px;margin-left: 100px;">
+                        <el-button type="primary" @click="updateOrderInfo('orderForm')">确定</el-button>
+                        <el-button @click="getBack">返回</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+    </el-row>
+
+
+    <script type="text/javascript" src="../../../static/js/api/weimai/infoListApi.js"
+            data-th-src="@{/static/js/api/weimai/infoListApi.js}"></script>
+    <script type="text/javascript" src="../../../static/js/app/weimai/infoList.js"
+            data-th-src="@{/static/js/app/weimai/infoList.js}"></script>
+</div>

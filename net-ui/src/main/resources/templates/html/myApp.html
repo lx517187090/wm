@@ -1,0 +1,122 @@
+<!--定义当前页面对应的vue示例,注意:id命名必须以App结尾-->
+<div data-th-id="|${className}App|">
+    <div v-show="showHide">
+        <th:block th:if="!${#lists.isEmpty(requestList)}">
+            <!--定义查询参数表单-->
+            <el-row :gutter="20">
+                <el-col th:each="map : ${requestList}" :span="6">
+                    <div class="input_label">[[${map.remark}]] :</div>
+                    <div class="input_wrap">
+                        <el-input size="medium" th:attr="placeholder=${map.remark},v-model=formObj.+${map.name}" clearable></el-input>
+                    </div>
+                </el-col>
+                <el-col :span="6">
+                    <el-button style="width: 100px;" size="small" icon="search" @click="onSubmit" :loading="searchLoading">搜索</el-button>
+                    <el-button th:if="${requestMappingMaps.exportExcel}" style="width: 100px;" type="primary" size="small" @click="exportExcel">
+                        <i class="fa fa-download " aria-hidden="true"></i><span style="margin-left: 5px;">导出</span>
+                    </el-button>
+                </el-col>
+            </el-row>
+        </th:block>
+        <th:block th:if="${requestMappingMaps.save} or ${requestMappingMaps.update} or ${requestMappingMaps.delete}">
+            <el-row :gutter="20" class="paddingTop10">
+                <el-col :span="17" style="padding-left: 30px">
+                    <el-button
+                            th:if="${requestMappingMaps.save} and ${requiresPermissionsMaps.save}"
+                            th:attr="'shiro:hasPermission'=${requiresPermissionsMaps.save}"
+                            type="primary"
+                            size="small"
+                            icon="plus"
+                            @click="addInfo">新增</el-button>
+                    <el-button
+                            th:if="${requestMappingMaps.save} and !${requiresPermissionsMaps.save}"
+                            type="primary"
+                            size="small"
+                            icon="plus"
+                            @click="addInfo">新增</el-button>
+                    <el-button
+                            th:if="${requestMappingMaps.update} and ${requiresPermissionsMaps.update}"
+                            th:attr="'shiro:hasPermission'=${requiresPermissionsMaps.update}"
+                            type="primary"
+                            size="small"
+                            icon="edit"
+                            @click="modifyInfo">修改</el-button>
+                    <el-button
+                            th:if="${requestMappingMaps.update} and !${requiresPermissionsMaps.update}"
+                            type="primary"
+                            size="small"
+                            icon="edit"
+                            @click="modifyInfo">修改</el-button>
+                    <el-button
+                            th:if="${requestMappingMaps.delete} and ${requiresPermissionsMaps.delete}"
+                            th:attr="'shiro:hasPermission'=${requiresPermissionsMaps.delete}"
+                            type="primary"
+                            size="small"
+                            icon="delete"
+                            @click="deleteInfo">删除</el-button>
+                    <el-button
+                            th:if="${requestMappingMaps.delete} and !${requiresPermissionsMaps.delete}"
+                            type="primary"
+                            size="small"
+                            icon="delete"
+                            @click="deleteInfo">删除</el-button>
+                </el-col>
+            </el-row>
+        </th:block>
+        <!--定义展示表格-->
+        <el-col style="padding: 20px;">
+            <th:block th:if="${requestMappingMaps.save} or ${requestMappingMaps.update} or ${requestMappingMaps.delete}">
+                <th:block th:if="!${#lists.isEmpty(requestList)}">
+                <el-table :data="tableData" @selection-change="handleSelectionChange" v-loading="tableLoading" border>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(requestList)}">
+                <el-table :data="tableData" @selection-change="handleSelectionChange" border>
+                </th:block>
+            </th:block>
+            <th:block th:if="!${requestMappingMaps.save} and !${requestMappingMaps.update} and !${requestMappingMaps.delete}">
+                <th:block th:if="!${#lists.isEmpty(requestList)}">
+                <el-table :data="tableData" v-loading="tableLoading" border>
+                </th:block>
+                <th:block th:if="${#lists.isEmpty(requestList)}">
+                <el-table :data="tableData" border>
+                </th:block>
+            </th:block>
+                <el-table-column
+                        label="序号"
+                        width="45">
+                    <template scope="scope">
+                        <span>{{(scope.$index +1)+(currentPage-1)*pageSize}}</span>
+                    </template>
+                </el-table-column>
+            <th:block th:if="${requestMappingMaps.save} or ${requestMappingMaps.update} or ${requestMappingMaps.delete}">
+                <el-table-column type="selection" width="55"></el-table-column>
+            </th:block>
+                <el-table-column th:each="map : ${responseList}" th:attr="prop=${map.name}" th:label="${map.remark}">
+                </el-table-column>
+            </el-table>
+            <!--导入分页页面-->
+            <!--<div data-th-include="common/pagination"></div>-->
+        </el-col>
+    </div>
+
+    <th:block th:if="${requestMappingMaps.save} or ${requestMappingMaps.update}">
+        <!--新增 / 编辑-->
+        <el-row class="panel" v-show = "!showHide">
+            <el-col class="panel-header" v-text="panelTitle">
+            </el-col>
+            <el-col style="padding: 20px;width: 550px;">
+                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                    <el-form-item th:each="map : ${responseList}" th:label="${map.remark}" th:attr="prop=${map.name}">
+                        <el-input th:attr="placeholder=${map.remark},v-model=ruleForm.+${map.name}"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="submitForm('ruleForm')">确定</el-button>
+                        <el-button @click="getBack">返回</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+        </el-row>
+    </th:block>
+</div>
+<!--<script type="text/javascript" src="../../../static/js/api//.js" data-th-src="@{/static/js/api//.js}"></script>-->
+<!--<script type="text/javascript" src="../../../static/js/app//.js" data-th-src="@{/static/js/app//.js}"></script>-->

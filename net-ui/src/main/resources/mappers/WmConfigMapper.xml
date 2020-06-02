@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.vz.finance.integration.net.ui.modules.mappers.WmConfigMapper" >
+  <resultMap id="BaseResultMap" type="org.vz.finance.integration.net.ui.modules.entity.WmConfig" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="conf_name" property="confName" jdbcType="VARCHAR" />
+    <result column="conf_key" property="confKey" jdbcType="VARCHAR" />
+    <result column="conf_group" property="confGroup" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, conf_name, conf_key, conf_group
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from wm_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wm_config
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByConfName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from wm_config
+    where conf_name = #{confName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wm_config
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmConfig" >
+    insert into wm_config (id, conf_name, conf_key, 
+      conf_group)
+    values (#{id,jdbcType=VARCHAR}, #{confName,jdbcType=VARCHAR}, #{confKey,jdbcType=VARCHAR}, 
+      #{confGroup,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmConfig" >
+    insert into wm_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="confName != null" >
+        conf_name,
+      </if>
+      <if test="confKey != null" >
+        conf_key,
+      </if>
+      <if test="confGroup != null" >
+        conf_group,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="confName != null" >
+        #{confName,jdbcType=VARCHAR},
+      </if>
+      <if test="confKey != null" >
+        #{confKey,jdbcType=VARCHAR},
+      </if>
+      <if test="confGroup != null" >
+        #{confGroup,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmConfigExample" resultType="java.lang.Integer" >
+    select count(*) from wm_config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update wm_config
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confName != null" >
+        conf_name = #{record.confName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confKey != null" >
+        conf_key = #{record.confKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confGroup != null" >
+        conf_group = #{record.confGroup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update wm_config
+    set id = #{record.id,jdbcType=VARCHAR},
+      conf_name = #{record.confName,jdbcType=VARCHAR},
+      conf_key = #{record.confKey,jdbcType=VARCHAR},
+      conf_group = #{record.confGroup,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmConfig" >
+    update wm_config
+    <set >
+      <if test="confName != null" >
+        conf_name = #{confName,jdbcType=VARCHAR},
+      </if>
+      <if test="confKey != null" >
+        conf_key = #{confKey,jdbcType=VARCHAR},
+      </if>
+      <if test="confGroup != null" >
+        conf_group = #{confGroup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.vz.finance.integration.net.ui.modules.entity.WmConfig" >
+    update wm_config
+    set conf_name = #{confName,jdbcType=VARCHAR},
+      conf_key = #{confKey,jdbcType=VARCHAR},
+      conf_group = #{confGroup,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

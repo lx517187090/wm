@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter" lazy-init="true">
+		<description>状态过滤器</description>
+		<property name="slowSqlMillis" value="3000" />
+		<property name="logSlowSql" value="true" />
+		<property name="mergeSql" value="true" />
+	</bean>
+	
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+			destroy-method="close">
+			<property name="driverClassName" value="${db.driver}" />
+			<!--数据库连接 -->
+			<property name="url" value="${db.writer.url}" />
+			<!--用户名 -->
+			<property name="username" value="${db.writer.username}" />
+			<!--密码 -->
+			<property name="password" value="${db.writer.password}" />
+			<!--最小连接数 -->
+			<property name="maxIdle" value="${db.minIdle}" />
+			<!--最大连接数 -->
+			<property name="maxActive" value="${db.maxActive}" />
+
+			<!-- 配置监控统计拦截的filters -->
+			<!--<property name="filters" value="stat" />-->
+	
+		</bean>
+	
+	<!-- 切面 
+	<bean class="org.ibase4j.core.aspect.DataSourceAspect" />-->
+	<!--  -->
+	<bean class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource" />
+	</bean>
+</beans>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.vz.finance.integration.manage.sys.dao.SysUserDao">
+	
+	<!-- 查询用户的所有权限 -->
+	<select id="queryAllPerms" resultType="string">
+		select m.perms from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+			LEFT JOIN sys_menu m on rm.menu_id = m.id_
+		where ur.user_id = #{userId}
+	</select>
+	
+	<!-- 查询用户的所有菜单ID --> 
+	<select id="queryAllMenuId" resultType="string">
+		select distinct rm.menu_id from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+		where ur.user_id = #{userId}
+	</select>
+
+
+	<select id="queryUserByUserName" resultType="org.vz.finance.integration.model.SysUser">
+		SELECT
+			*
+		FROM
+			sys_user a
+		WHERE
+			a.USERNAME = #{userName}
+	</select>
+
+	<select id="queryUserListByUserNames" resultType="org.vz.finance.integration.model.SysUser">
+		select username,login_Name from sys_user where username in
+		<foreach item="userName" collection="userNames" open="(" separator="," close=")">
+			#{userName}
+		</foreach>
+	</select>
+
+
+	<select id="getAllUser" resultType="org.vz.finance.integration.model.SysUser">
+		SELECT
+		LOGIN_NAME, USERNAME
+		FROM
+		sys_user a
+		WHERE status = '1'
+
+		order by create_time
+	</select>
+
+</mapper>
