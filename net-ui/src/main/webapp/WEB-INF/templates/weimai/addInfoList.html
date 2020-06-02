@@ -205,7 +205,7 @@
                     </el-form-item>
 
                     <el-form-item :span="4" style="padding: 10px;margin-left: 100px;">
-                        <el-button type="primary" @click="updateOrderInfo('orderForm')">确定</el-button>
+                        <el-button type="primary" @click="updateOrderInfo('orderForm')" :loading="infoLoading">确定</el-button>
                         <el-button @click="getBack">返回</el-button>
                     </el-form-item>
                 </el-form>

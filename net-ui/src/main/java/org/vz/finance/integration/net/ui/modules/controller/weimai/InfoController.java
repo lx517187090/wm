@@ -149,13 +149,11 @@ public class InfoController extends BaseController {
     @RequiresPermissions("weimai:delevery:update")
     @ManagerLogAp(usePattern = true, value = "对订单信息id [${id}]进行修改派单信息", type = 2)
     public Object updateDelivery(@RequestBody WmDeliveryInfo info) {
-        if(null == info) {
-            List<WmDeliveryInfo> deliveryByInfoId = infoService.getDeliveryByInfoId(info.getInfoId());
-            if (deliveryByInfoId == null || CollectionUtils.isEmpty(deliveryByInfoId)) {
-                return setModelMap(new ModelMap(), HttpCode.BAD_REQUEST, "该单还未派件，请派单后再修改");
-            }
+        if(StringUtils.isNotBlank(info.getId())) {
+            infoService.updateDelivery(info);
+        } else {
+            infoService.saveDelivery(info);
         }
-        infoService.updateDelivery(info);
         return setSuccessModelMap(1);
     }
 

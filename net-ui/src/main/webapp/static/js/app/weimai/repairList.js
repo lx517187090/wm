@@ -14,6 +14,7 @@ var ReportContractListVm;
                     "happenDateEnd": null
                 },
                 searchLoading: false,
+                repairLoading: false,
                 tableLoading: false,
                 showHide: true,
                 showPageType: '',
@@ -69,10 +70,10 @@ var ReportContractListVm;
                 this.onSubmit();
             },
             updateOrderInfo: function (formName) {
-                debugger;
                 var self = this;
                 this.$refs[formName].validate(function (valid) {
                     if (valid) {
+                        self.repairLoading = true;
                         if (self.addModifyFlag) {
                             debugger
                             var params = Object.assign(self.repairForm);
@@ -81,8 +82,10 @@ var ReportContractListVm;
                                 if (res.data === 1) {
                                     self.$message({type: 'success', message: '保存成功!'});
                                     self.showHide = true;
+                                    self.repairLoading = false;
                                     vm.getTableData(self, orderInfoListUrl);
                                 } else {
+                                    self.repairLoading = false;
                                     self.$message({type: 'error', message: '保存失败!' + res.data});
                                 }
                             });
@@ -92,8 +95,10 @@ var ReportContractListVm;
                                 if (res.data === 1) {
                                     self.$message({type: 'success', message: '修改成功!'});
                                     self.showHide = true;
+                                    self.repairLoading = false;
                                     vm.getTableData(self, orderInfoListUrl);
                                 } else {
+                                    self.repairLoading = false;
                                     self.$message({type: 'error', message: '修改失败!' + res.data});
                                 }
                             });

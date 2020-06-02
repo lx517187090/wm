@@ -16,6 +16,7 @@ var ReportContractListVm;
                 },
                 searchLoading: false,
                 tableLoading: false,
+                infoLoading: false,
                 machineList: [],
                 colorList:[],
                 partsList:[],
@@ -95,15 +96,16 @@ var ReportContractListVm;
                 this.onSubmit();
             },
             updateOrderInfo: function (formName) {
-                debugger;
                 var self = this;
                 this.$refs[formName].validate(function (valid) {
                     if (valid) {
+                        self.infoLoading = true;
                         if(self.addModifyFlag) {
                             var params = Object.assign(self.orderForm);
                             saveOrderInfo(params).then(function (res) {
                                 self.$message({type: 'success', message: '保存成功!'});
                                 self.showHide = true;
+                                self.infoLoading = false;
                                 vm.getTableData(self, orderInfoListUrl);
                             });
                         }else {
@@ -111,6 +113,7 @@ var ReportContractListVm;
                             updateOrderInfo(params).then(function (res) {
                                 self.$message({type: 'success', message: '修改成功!'});
                                 self.showHide = true;
+                                self.infoLoading = false;
                                 vm.getTableData(self, orderInfoListUrl);
                             });
                         }

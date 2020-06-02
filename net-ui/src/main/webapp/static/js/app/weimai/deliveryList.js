@@ -17,6 +17,7 @@ var ReportContractListVm;
                     "deliveryDate": ""
                 },
                 searchLoading: false,
+                deliveryLoading:false,
                 tableLoading: false,
                 showHide: true,
                 showPageType: '',
@@ -74,6 +75,7 @@ var ReportContractListVm;
                 var self = this;
                 this.$refs[formName].validate(function (valid) {
                     if (valid) {
+                        self.deliveryLoading = true;
                         if (self.addModifyFlag) {
                             var params = Object.assign(self.deliveryForm);
                             params.infoId = self.deliveryForm.infoId;
@@ -82,8 +84,10 @@ var ReportContractListVm;
                                     self.$message({type: 'success', message: '保存成功!'});
                                     self.showHide = true;
                                     vm.getTableData(self, orderInfoListUrl);
+                                    self.deliveryLoading = false;
                                 } else {
                                     self.$message({type: 'error', message: '保存失败!' + res.data});
+                                    self.deliveryLoading = false;
                                 }
                             });
                         } else {
@@ -92,8 +96,10 @@ var ReportContractListVm;
                                 if (res.data === 1) {
                                     self.$message({type: 'success', message: '修改成功!'});
                                     self.showHide = true;
+                                    self.deliveryLoading = false;
                                     vm.getTableData(self, orderInfoListUrl);
                                 } else {
+                                    self.deliveryLoading = false;
                                     self.$message({type: 'error', message: '修改失败!' + res.data});
                                 }
                             });
@@ -161,7 +167,7 @@ var ReportContractListVm;
                 }
             },
             modifyInfo: function () {
-                debugger;
+                debugger
                 var self = this;
                 this.addModifyFlag = false;
                 this.panelTitle = "修改";
@@ -173,9 +179,6 @@ var ReportContractListVm;
                     flag = true;
                 } else if (this.multipleSelection.length > 1) {
                     msg = "只能选中一个数据进行修改";
-                    flag = true;
-                } else if (isEmptyStr(selectData.id)) {
-                    msg = "该单还未派件，请派单后再修改";
                     flag = true;
                 }
                 if (flag) {
@@ -207,12 +210,16 @@ var ReportContractListVm;
                     repairType:selectData.repairType,
                     rmk2:selectData.rmk2
                 };
+                var money = selectData.money;
+                if (isEmptyStr(money)) {
+                    money = "";
+                }
                 self.deliveryForm = {
                     id:selectData.id,
                     infoId: selectData.infoId,
                     deliveryDate: selectData.deliveryDate,
                     deliveryType: selectData.deliveryType,
-                    money: selectData.money + "",
+                    money: money + "",
                     payDate: selectData.payDate,
                     payAccount: selectData.payAccount,
                     rmk: selectData.rmk

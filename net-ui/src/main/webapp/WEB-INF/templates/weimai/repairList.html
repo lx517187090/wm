@@ -239,7 +239,7 @@
                  <el-row class="panel">
                     <el-col :span="4" style="padding: 10px;margin-left: 575px;">
                         <el-form-item>
-                            <el-button type="primary" @click="updateOrderInfo('repairForm')">确定</el-button>
+                            <el-button type="primary" @click="updateOrderInfo('repairForm')" :loading="repairLoading">确定</el-button>
                             <el-button @click="getBack">返回</el-button>
                         </el-form-item>
                     </el-col>
