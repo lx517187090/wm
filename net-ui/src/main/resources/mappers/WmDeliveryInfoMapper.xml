@@ -304,7 +304,7 @@
     <if test="sn != null and sn != ''">
       and a.SN like concat('%', #{sn}, '%')
     </if>
-    order by  happen_date desc
+    order by  happen_date desc, a.create_date desc
   </select>
 
   <select id="selectDelivery" resultType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO" >
@@ -367,7 +367,7 @@
     <if test='deliverySign != null and deliverySign == "0" '>
       and b.delivery_date is null
     </if>
-    order by a.happen_date desc
+    order by a.happen_date desc ,a.create_date desc
   </select>
 
   <select id="selectRepair" resultType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO" >
@@ -406,6 +406,6 @@
     <if test="courierNumber != null and courierNumber != ''">
       and a.courier_Number like concat('%', #{courierNumber}, '%')
     </if>
-    order by a.happen_date desc
+    order by a.happen_date desc ,a.create_date desc
   </select>
 </mapper>

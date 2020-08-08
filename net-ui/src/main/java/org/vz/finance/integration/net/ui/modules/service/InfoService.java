@@ -194,14 +194,14 @@ public class InfoService {
         info.setId(ToolForID.getWmInfoID());
         info.setDeliverySign("1");
         wmDeliveryInfoMapper.insert(info);
-        if (StringUtils.isNotBlank(info.getInfoId())) {
+        /*if (StringUtils.isNotBlank(info.getInfoId())) {
             WmOrderInfo wmOrderInfo = new WmOrderInfo();
             wmOrderInfo.setId(info.getInfoId());
             wmOrderInfo.setDeliveryDate(info.getDeliveryDate());
             wmOrderInfo.setRmk(info.getRmk());
             wmOrderInfo.setDeliverySign(info.getDeliverySign());
            iInfoService.updateById(wmOrderInfo);
-        }
+        }*/
     }
 
     public void saveRepair(WmRepairInfo info) {
