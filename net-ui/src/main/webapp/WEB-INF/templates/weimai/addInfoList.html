@@ -25,6 +25,36 @@
                 </div>
             </el-col>
         </el-row>
+        <br/>
+        <el-row :gutter="20">
+            <el-col :span="6">
+                <div class="input_label">收件时间:</div>
+                <div class="input_wrap">
+                    <el-date-picker
+                            size="small"
+                            v-model="formObj.happenDate"
+                            type="date"
+                            @change="getStartTime"
+                            value-format="yyyy-MM-dd"
+                            style="width: 100%">
+                    </el-date-picker>
+                </div>
+            </el-col>
+
+            <el-col :span="6">
+                <div class="input_label">SN:</div>
+                <div class="input_wrap">
+                    <el-input placeholder="请输入SN" size="small" v-model="formObj.sn" clearable></el-input>
+                </div>
+            </el-col>
+
+            <el-col :span="6">
+                <div class="input_label">地址:</div>
+                <div class="input_wrap">
+                    <el-input placeholder="请输入地址" size="small" v-model="formObj.address" clearable></el-input>
+                </div>
+            </el-col>
+        </el-row>
 
 
         <el-row :gutter="20" class="paddingTop10">

@@ -304,6 +304,9 @@
     <if test="sn != null and sn != ''">
       and a.SN like concat('%', #{sn}, '%')
     </if>
+    <if test="address != null and address != ''">
+      and a.address like concat('%', #{address}, '%')
+    </if>
     order by  happen_date desc, a.create_date desc
   </select>
 
@@ -366,6 +369,10 @@
 
     <if test='deliverySign != null and deliverySign == "0" '>
       and b.delivery_date is null
+    </if>
+
+    <if test="machineModel != null and machineModel != ''">
+      and a.machine_model like concat('%', #{machineModel}, '%')
     </if>
     order by a.happen_date desc ,a.create_date desc
   </select>

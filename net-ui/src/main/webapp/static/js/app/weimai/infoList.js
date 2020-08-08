@@ -61,7 +61,7 @@ var ReportContractListVm;
         },
         methods: {
             getStartTime: function (date) {
-                this.formObj.registerTimeStart = date;
+                this.formObj.happenDate = date;
             },
             getEndTime: function (date) {
                 this.formObj.registerTimeEnd = date;
