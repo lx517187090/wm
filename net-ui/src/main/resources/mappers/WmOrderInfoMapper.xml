@@ -510,6 +510,10 @@
             <if test='deliverySign != null and deliverySign != "" and deliverySign == "0"'>
                  and a.delivery_sign is null
             </if>
+
+            <if test="machineModel != null and machineModel != ''">
+                and b.machine_model =  #{machineModel}
+            </if>
     </select>
 
     <select id="selectRepair" parameterType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO" resultType="org.vz.finance.integration.net.ui.modules.vo.WmOrderInfoVO">

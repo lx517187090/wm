@@ -372,7 +372,7 @@
     </if>
 
     <if test="machineModel != null and machineModel != ''">
-      and a.machine_model like concat('%', #{machineModel}, '%')
+      and a.machine_model =  #{machineModel}
     </if>
     order by a.happen_date desc ,a.create_date desc
   </select>
